@@ -25,11 +25,18 @@ function renderStories() {
   const candidates = query
     ? state.data.editions.flatMap((edition) => edition.items.map((item) => ({ ...item, edition })))
     : state.edition.items.map((item) => ({ ...item, edition: state.edition }));
-  const stories = candidates.filter((item) => {
-    const topicMatch = state.filter === "all" || item.topics.includes(state.filter);
-    const queryMatch = !query || [item.title, item.summary, item.impact, ...item.topics].join(" ").toLowerCase().includes(query);
-    return topicMatch && queryMatch;
+  const queryMatches = candidates.filter((item) => !query || [item.title, item.summary, item.impact, ...item.topics].join(" ").toLowerCase().includes(query));
+  const availableTopics = new Set(queryMatches.flatMap((item) => item.topics));
+  if (state.filter !== "all" && !availableTopics.has(state.filter)) state.filter = "all";
+
+  document.querySelectorAll(".filter").forEach((button) => {
+    const active = button.dataset.filter === state.filter;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", String(active));
+    button.hidden = button.dataset.filter !== "all" && !availableTopics.has(button.dataset.filter);
   });
+
+  const stories = queryMatches.filter((item) => state.filter === "all" || item.topics.includes(state.filter));
 
   document.querySelector("#section-title").textContent = query ? "Search results" : "This week’s developments";
   document.querySelector("#section-description").textContent = query
@@ -70,14 +77,19 @@ function renderStories() {
 
 function renderArchive(data) {
   const root = document.querySelector("#archive-list");
-  data.editions.filter((edition) => edition.issue > 0).forEach((edition) => {
+  const panel = document.querySelector("#archive");
+  const layout = document.querySelector("#content-layout");
+  const previousEditions = data.editions.filter((edition) => edition.issue > 0 && edition.slug !== state.edition.slug);
+  root.replaceChildren();
+  previousEditions.forEach((edition) => {
     const link = document.createElement("a");
     link.className = "archive-item";
     link.href = `?edition=${edition.slug}#briefing`;
     link.innerHTML = `<span>Issue ${String(edition.issue).padStart(2, "0")}</span><small>${formatDate(edition.date)}</small>`;
     root.append(link);
   });
-  if (!root.children.length) root.innerHTML = '<p class="archive-empty">No editions published yet.</p>';
+  panel.hidden = previousEditions.length === 0;
+  layout.classList.toggle("no-archive", previousEditions.length === 0);
 }
 
 async function init() {
@@ -96,8 +108,6 @@ async function init() {
 }
 
 document.querySelectorAll(".filter").forEach((button) => button.addEventListener("click", () => {
-  document.querySelectorAll(".filter").forEach((item) => item.classList.remove("active"));
-  button.classList.add("active");
   state.filter = button.dataset.filter;
   renderStories();
 }));
@@ -109,6 +119,8 @@ const searchInput = document.querySelector("#search");
 searchToggle.addEventListener("click", () => {
   const open = searchBox.classList.toggle("open");
   searchToggle.setAttribute("aria-expanded", String(open));
+  searchInput.disabled = !open;
+  searchInput.setAttribute("aria-hidden", String(!open));
   if (open) searchInput.focus();
   else {
     searchInput.value = "";
