@@ -1,14 +1,18 @@
 # Cloud Platform Brief
 
-A high-signal weekly briefing for Cloud and Platform Architects, published at **[news.burnzo.de](https://news.burnzo.de)**.
+A focused weekly briefing for Cloud and Platform Architects, published at **[news.burnzo.de](https://news.burnzo.de)**.
 
 ## What it covers
 
-- AWS and Azure service changes
+- AWS, Azure and GCP service changes
 - Kubernetes and cloud-native ecosystem developments
-- Terraform, OpenTofu and infrastructure-as-code practices
+- Terraform, OpenTofu, Pulumi and infrastructure-as-code practices
 - Security, networking, observability, reliability and cost governance
 - Platform engineering patterns with architectural consequences
+- AI infrastructure, model serving, MLOps, governance and material model-platform changes
+- Developer experience, internal developer platforms, CI/CD, portals, golden paths and tools such as Backstage, Harness and Argo
+
+AI and developer-tooling coverage stays architecture-focused. General AI news, consumer features and routine product announcements are excluded.
 
 Every item answers three questions: what changed, why it matters, and whether to **Act now**, **Evaluate**, **Watch**, or **Read deeper**.
 
