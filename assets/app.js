@@ -1,4 +1,4 @@
-const state = { data: null, filter: "all", query: "", edition: null };
+const state = { data: null, filter: "all", edition: null };
 
 const statusClass = (status) => status.toLowerCase().replaceAll(" ", "-");
 const formatDate = (date) => new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "long", year: "numeric" }).format(new Date(`${date}T12:00:00Z`));
@@ -13,19 +13,17 @@ function renderHeader(edition) {
   document.querySelector("#edition-date").textContent = formatDate(edition.date);
   document.querySelector("#edition-summary").textContent = edition.summary;
   document.querySelector("#read-time").textContent = isLaunchPreview ? "Starts Monday" : `${edition.readTime} min read`;
-  document.querySelector("#story-count").textContent = `${edition.items.length} updates`;
-  document.querySelector("#issue-label").textContent = isLaunchPreview ? "FIRST EDITION PENDING" : `LATEST BRIEFING · ISSUE ${String(edition.issue).padStart(2, "0")}`;
+  document.querySelector("#story-count").textContent = `${edition.items.length} stories`;
+  document.querySelector("#issue-label").textContent = isLaunchPreview ? "FIRST ISSUE PENDING" : `ISSUE ${String(edition.issue).padStart(2, "0")}`;
 
 }
 
 function renderStories() {
   const root = document.querySelector("#stories");
   const template = document.querySelector("#story-template");
-  const query = state.query.trim().toLowerCase();
   const stories = state.edition.items.filter((item) => {
     const topicMatch = state.filter === "all" || item.topics.includes(state.filter);
-    const queryMatch = !query || [item.title, item.summary, item.impact, ...item.topics].join(" ").toLowerCase().includes(query);
-    return topicMatch && queryMatch;
+    return topicMatch;
   });
 
   root.replaceChildren();
@@ -55,8 +53,8 @@ function renderStories() {
   });
   const emptyState = document.querySelector("#empty-state");
   emptyState.textContent = state.edition.items.length === 0
-    ? "The first briefing will be published Monday at 08:00 Europe/Berlin."
-    : "No updates match this filter.";
+    ? "The first edition will be published Monday at 08:00 Europe/Berlin."
+    : "No stories match this topic.";
   emptyState.hidden = stories.length > 0;
 }
 
@@ -69,7 +67,7 @@ function renderArchive(data) {
     link.innerHTML = `<span>Issue ${String(edition.issue).padStart(2, "0")}</span><small>${formatDate(edition.date)}</small>`;
     root.append(link);
   });
-  if (!root.children.length) root.innerHTML = '<p class="archive-empty">No published editions yet.</p>';
+  if (!root.children.length) root.innerHTML = '<p class="archive-empty">No editions published yet.</p>';
 }
 
 async function init() {
@@ -82,7 +80,7 @@ async function init() {
     renderStories();
     renderArchive(state.data);
   } catch (error) {
-    document.querySelector("#stories").innerHTML = `<div class="empty-state">The briefing could not be loaded. Please try again shortly.</div>`;
+    document.querySelector("#stories").innerHTML = `<div class="empty-state">This edition could not be loaded. Please try again shortly.</div>`;
     console.error(error);
   }
 }
@@ -93,10 +91,5 @@ document.querySelectorAll(".filter").forEach((button) => button.addEventListener
   state.filter = button.dataset.filter;
   renderStories();
 }));
-
-document.querySelector("#search").addEventListener("input", (event) => {
-  state.query = event.target.value;
-  renderStories();
-});
 
 init();
