@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080b12" />
+    <meta name="description" content="A weekly, high-signal briefing for cloud and platform architects." />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title="Cloud Platform Brief" href="feed.xml" />
+    <link rel="stylesheet" href="assets/styles.css" />
+    <title>Cloud Platform Brief</title>
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="Cloud Platform Brief home">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span><strong>Cloud Platform</strong><small>BRIEF</small></span>
+      </a>
+      <nav class="primary-nav" aria-label="Primary navigation">
+        <a class="active" href="#briefing">Briefing</a>
+        <a href="#signals">Signals</a>
+        <a href="#archive">Archive</a>
+      </nav>
+      <div class="header-actions">
+        <a class="icon-button" href="feed.xml" aria-label="RSS feed" title="RSS feed">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4a15 15 0 0 1 15 15M5 10a9 9 0 0 1 9 9M6 19h.01"/></svg>
+        </a>
+        <a class="github-link" href="https://github.com/burnz0/cloud-platform-news">View on GitHub</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="briefing">
+        <div class="eyebrow"><span class="pulse"></span> Updated every Monday · 08:00 Europe/Berlin</div>
+        <div class="hero-grid">
+          <div>
+            <p class="issue-label" id="issue-label">LATEST BRIEFING</p>
+            <h1>The changes that<br/><em>deserve attention.</em></h1>
+            <p class="lede">A concise weekly read on cloud infrastructure, Kubernetes, IaC, security and the operational decisions behind resilient platforms.</p>
+          </div>
+          <div class="edition-card">
+            <span>Current edition</span>
+            <strong id="edition-date">Preparing launch</strong>
+            <p id="edition-summary">The first automated edition will appear here.</p>
+            <div class="edition-meta"><span id="read-time">— min read</span><span id="story-count">0 signals</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="metrics" aria-label="Briefing metrics">
+        <article><span class="metric-icon critical">!</span><div><strong id="action-count">0</strong><small>Act now</small></div></article>
+        <article><span class="metric-icon evaluate">↗</span><div><strong id="evaluate-count">0</strong><small>Evaluate</small></div></article>
+        <article><span class="metric-icon watch">◉</span><div><strong id="watch-count">0</strong><small>Watch</small></div></article>
+        <article><span class="metric-icon sources">⌁</span><div><strong id="source-count">0</strong><small>Primary sources</small></div></article>
+      </section>
+
+      <section class="toolbar" id="signals">
+        <div class="filters" role="group" aria-label="Filter by topic">
+          <button class="filter active" data-filter="all">All signals</button>
+          <button class="filter" data-filter="AWS">AWS</button>
+          <button class="filter" data-filter="Azure">Azure</button>
+          <button class="filter" data-filter="Kubernetes">Kubernetes</button>
+          <button class="filter" data-filter="IaC">IaC</button>
+          <button class="filter" data-filter="Platform">Platform</button>
+        </div>
+        <label class="search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <input id="search" type="search" placeholder="Search this edition" autocomplete="off" />
+        </label>
+      </section>
+
+      <section class="content-layout">
+        <div>
+          <div class="section-heading"><div><span>01</span><h2>Priority signals</h2></div><p>Ranked by architectural impact, urgency and operational reach.</p></div>
+          <div class="stories" id="stories" aria-live="polite"></div>
+          <div class="empty-state" id="empty-state" hidden>No signals match this filter.</div>
+        </div>
+
+        <aside>
+          <section class="side-panel decision-panel">
+            <p class="panel-kicker">DECISION LENS</p>
+            <h3>What deserves action?</h3>
+            <div class="legend-row"><span class="status act-now">Act now</span><p>Deadlines, exposure or breaking changes.</p></div>
+            <div class="legend-row"><span class="status evaluate">Evaluate</span><p>Material capability worth testing.</p></div>
+            <div class="legend-row"><span class="status watch">Watch</span><p>Directionally important, not urgent.</p></div>
+            <div class="legend-row"><span class="status read-deeper">Read deeper</span><p>Useful architectural context.</p></div>
+          </section>
+          <section class="side-panel scope-panel">
+            <p class="panel-kicker">SCOPE</p>
+            <div class="scope-list">
+              <span>AWS</span><span>Azure</span><span>Kubernetes</span><span>Terraform</span><span>OpenTofu</span><span>Platform Engineering</span>
+            </div>
+          </section>
+          <section class="side-panel archive-panel" id="archive">
+            <p class="panel-kicker">ARCHIVE</p>
+            <h3>Past briefings</h3>
+            <div id="archive-list"></div>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <footer>
+      <div class="brand footer-brand"><span class="brand-mark"><span></span><span></span><span></span></span><span><strong>Cloud Platform</strong><small>BRIEF</small></span></div>
+      <p>Built for architecture decisions, not announcement volume.</p>
+      <p><a href="feed.xml">RSS</a> · <a href="https://github.com/burnz0/cloud-platform-news">Source</a></p>
+    </footer>
+
+    <template id="story-template">
+      <article class="story-card">
+        <div class="story-rail"><span class="story-number"></span><span class="rail-line"></span></div>
+        <div class="story-content">
+          <div class="story-topline"><div class="story-tags"></div><span class="status"></span></div>
+          <h3></h3>
+          <p class="story-summary"></p>
+          <div class="impact"><span>WHY IT MATTERS</span><p></p></div>
+          <div class="story-footer"><span class="story-date"></span><a class="source-link" target="_blank" rel="noopener noreferrer">Primary source <span>↗</span></a></div>
+        </div>
+      </article>
+    </template>
+
+    <script src="assets/app.js" defer></script>
+  </body>
+</html>
