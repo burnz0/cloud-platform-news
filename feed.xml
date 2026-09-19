@@ -17,7 +17,7 @@
       <link>https://news.burnzo.de/?edition=2026-09-19-test-run</link>
       <guid>https://news.burnzo.de/?edition=2026-09-19-test-run</guid>
       <pubDate>Sat, 19 Sep 2026 18:34:00 GMT</pubDate>
-      <description>Kubernetes hardens writable volumes, GitHub expands platform governance, and GCP improves MongoDB-to-BigQuery type fidelity.</description>
+      <description>Kubernetes 1.37 introduces alpha controls for hardening writable volumes. GitHub expands enterprise security enforcement, AI-development governance and automated coverage policies, while GCP changes the default representation for MongoDB-to-BigQuery streams. Architecture teams should review Kubernetes feature-gate pilots and validate downstream schemas before creating new Datastream pipelines. No AWS or Azure changes met the editorial threshold this week.</description>
     </item>
   </channel>
 </rss>
