@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Cloud Platform Brief</title>
+    <link>https://news.burnzo.de/</link>
+    <description>Consequential developments for cloud and platform architects.</description>
+    <language>en</language>
+    <item>
+      <title>Cloud Platform Brief — Launch preview</title>
+      <link>https://news.burnzo.de/?edition=launch-preview</link>
+      <guid>https://news.burnzo.de/?edition=launch-preview</guid>
+      <pubDate>Sat, 19 Sep 2026 12:00:00 GMT</pubDate>
+      <description>The dashboard is ready. Automated weekly editions begin after repository setup.</description>
+    </item>
+  </channel>
+</rss>
