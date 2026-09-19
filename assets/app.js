@@ -9,17 +9,13 @@ function currentEdition(data) {
 }
 
 function renderHeader(edition) {
+  const isLaunchPreview = edition.issue === 0 && edition.items.length === 0;
   document.querySelector("#edition-date").textContent = formatDate(edition.date);
   document.querySelector("#edition-summary").textContent = edition.summary;
-  document.querySelector("#read-time").textContent = `${edition.readTime} min read`;
+  document.querySelector("#read-time").textContent = isLaunchPreview ? "Starts Monday" : `${edition.readTime} min read`;
   document.querySelector("#story-count").textContent = `${edition.items.length} updates`;
-  document.querySelector("#issue-label").textContent = `LATEST BRIEFING · ISSUE ${String(edition.issue).padStart(2, "0")}`;
+  document.querySelector("#issue-label").textContent = isLaunchPreview ? "FIRST EDITION PENDING" : `LATEST BRIEFING · ISSUE ${String(edition.issue).padStart(2, "0")}`;
 
-  const counts = edition.items.reduce((acc, item) => ({ ...acc, [item.status]: (acc[item.status] || 0) + 1 }), {});
-  document.querySelector("#action-count").textContent = counts["Act now"] || 0;
-  document.querySelector("#evaluate-count").textContent = counts.Evaluate || 0;
-  document.querySelector("#watch-count").textContent = counts.Watch || 0;
-  document.querySelector("#source-count").textContent = new Set(edition.items.map((item) => item.sourceUrl).filter(Boolean)).size;
 }
 
 function renderStories() {
@@ -57,18 +53,23 @@ function renderStories() {
     else link.hidden = true;
     root.append(node);
   });
-  document.querySelector("#empty-state").hidden = stories.length > 0;
+  const emptyState = document.querySelector("#empty-state");
+  emptyState.textContent = state.edition.items.length === 0
+    ? "The first briefing will be published Monday at 08:00 Europe/Berlin."
+    : "No updates match this filter.";
+  emptyState.hidden = stories.length > 0;
 }
 
 function renderArchive(data) {
   const root = document.querySelector("#archive-list");
-  data.editions.forEach((edition) => {
+  data.editions.filter((edition) => edition.issue > 0).forEach((edition) => {
     const link = document.createElement("a");
     link.className = "archive-item";
     link.href = `?edition=${edition.slug}#briefing`;
     link.innerHTML = `<span>Issue ${String(edition.issue).padStart(2, "0")}</span><small>${formatDate(edition.date)}</small>`;
     root.append(link);
   });
+  if (!root.children.length) root.innerHTML = '<p class="archive-empty">No published editions yet.</p>';
 }
 
 async function init() {
