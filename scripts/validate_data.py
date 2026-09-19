@@ -9,7 +9,10 @@ from urllib.parse import urlparse
 
 DATA_PATH = Path(__file__).parents[1] / "data" / "briefings.json"
 ALLOWED_STATUSES = {"Act now", "Evaluate", "Watch", "Read deeper"}
-ALLOWED_TOPICS = {"AWS", "Azure", "GCP", "Kubernetes", "IaC", "Platform", "AI", "DX"}
+ALLOWED_TOPICS = {
+    "AWS", "Azure", "GCP", "Kubernetes", "IaC", "Platform", "AI", "DX",
+    "Security", "Networking", "Observability", "Reliability", "FinOps",
+}
 
 
 def fail(message: str) -> None:
