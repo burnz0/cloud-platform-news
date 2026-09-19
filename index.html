@@ -17,8 +17,8 @@
         <span><strong>Cloud Platform Brief</strong><small>WEEKLY ARCHITECTURE NOTES</small></span>
       </a>
       <nav class="primary-nav" aria-label="Primary navigation">
-        <a class="active" href="#briefing">Briefing</a>
-        <a href="#updates">Updates</a>
+        <a class="active" href="#briefing">Latest</a>
+        <a href="#updates">Topics</a>
         <a href="#archive">Archive</a>
       </nav>
       <div class="header-actions">
@@ -34,22 +34,22 @@
         <div class="eyebrow">Published Mondays · 08:00 CET/CEST</div>
         <div class="hero-grid">
           <div>
-            <p class="issue-label" id="issue-label">LATEST BRIEFING</p>
+            <p class="issue-label" id="issue-label">ISSUE 01</p>
             <h1>Cloud &amp; platform<br/>engineering, distilled.</h1>
-            <p class="lede">A weekly technical briefing on cloud platforms, Kubernetes, infrastructure as code, AI infrastructure and developer experience.</p>
+            <p class="lede">A concise weekly review of consequential changes across cloud platforms, Kubernetes, infrastructure as code, AI infrastructure and developer experience.</p>
           </div>
           <div class="edition-card">
-            <span>Current edition</span>
+            <span>Latest edition</span>
             <strong id="edition-date">Preparing launch</strong>
             <p id="edition-summary">The first automated edition will appear here.</p>
-            <div class="edition-meta"><span id="read-time">— min read</span><span id="story-count">0 updates</span></div>
+            <div class="edition-meta"><span id="read-time">— min read</span><span id="story-count">0 stories</span></div>
           </div>
         </div>
       </section>
 
       <section class="toolbar" id="updates">
         <div class="filters" role="group" aria-label="Filter by topic">
-          <button class="filter active" data-filter="all">All updates</button>
+          <button class="filter active" data-filter="all">All topics</button>
           <button class="filter" data-filter="AWS">AWS</button>
           <button class="filter" data-filter="Azure">Azure</button>
           <button class="filter" data-filter="GCP">GCP</button>
@@ -59,17 +59,13 @@
           <button class="filter" data-filter="AI">AI / ML</button>
           <button class="filter" data-filter="DX">DX</button>
         </div>
-        <label class="search">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-          <input id="search" type="search" placeholder="Search this edition" autocomplete="off" />
-        </label>
       </section>
 
       <section class="content-layout">
         <div>
-          <div class="section-heading"><div><span>01</span><h2>Priority updates</h2></div><p>Ranked by architectural impact, urgency and operational reach.</p></div>
+          <div class="section-heading"><div><span>01</span><h2>This week’s developments</h2></div><p>Selected for architectural impact, urgency and operational reach.</p></div>
           <div class="stories" id="stories" aria-live="polite"></div>
-          <div class="empty-state" id="empty-state" hidden>No updates match this filter.</div>
+          <div class="empty-state" id="empty-state" hidden>No stories match this topic.</div>
         </div>
 
         <aside>
@@ -81,7 +77,7 @@
           </section>
           <section class="side-panel archive-panel" id="archive">
             <p class="panel-kicker">ARCHIVE</p>
-            <h3>Past briefings</h3>
+            <h3>Previous editions</h3>
             <div id="archive-list"></div>
           </section>
         </aside>
@@ -89,7 +85,7 @@
     </main>
 
     <section class="disclaimer" aria-label="Editorial disclaimer">
-      <span>AI-assisted briefing</span>
+      <span>AI-assisted publication</span>
       <p>Content is generated and curated with AI from linked primary sources. It may contain errors or omissions and is not professional advice. Verify consequential decisions against the original sources.</p>
     </section>
 
