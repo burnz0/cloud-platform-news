@@ -12,7 +12,7 @@ function renderHeader(edition) {
   document.querySelector("#edition-date").textContent = formatDate(edition.date);
   document.querySelector("#edition-summary").textContent = edition.summary;
   document.querySelector("#read-time").textContent = `${edition.readTime} min read`;
-  document.querySelector("#story-count").textContent = `${edition.items.length} signals`;
+  document.querySelector("#story-count").textContent = `${edition.items.length} updates`;
   document.querySelector("#issue-label").textContent = `LATEST BRIEFING · ISSUE ${String(edition.issue).padStart(2, "0")}`;
 
   const counts = edition.items.reduce((acc, item) => ({ ...acc, [item.status]: (acc[item.status] || 0) + 1 }), {});
