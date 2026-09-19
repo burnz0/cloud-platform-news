@@ -2,6 +2,75 @@
   "schemaVersion": 1,
   "editions": [
     {
+      "issue": 1,
+      "slug": "2026-09-19-test-run",
+      "date": "2026-09-19",
+      "readTime": 5,
+      "summary": "Kubernetes hardens writable volumes, GitHub expands platform governance, and GCP improves MongoDB-to-BigQuery type fidelity.",
+      "items": [
+        {
+          "title": "Kubernetes 1.37 adds native bind-mount and emptyDir hardening",
+          "summary": "Two Alpha feature gates let operators apply noexec, nosuid, and nodev at the container bind-mount layer and set explicit emptyDir permissions.",
+          "impact": "Evaluate this for hardened cluster baselines. It can close executable-volume and sticky-bit gaps without init-container workarounds, but requires Alpha gates on the API server and kubelet plus runtime testing.",
+          "status": "Evaluate",
+          "topics": [
+            "Kubernetes"
+          ],
+          "published": "2026-09-16",
+          "sourceUrl": "https://kubernetes.io/blog/2026/09/16/kubernetes-v1-37-hardening-container-storage/"
+        },
+        {
+          "title": "GitHub lets enterprises lock security configurations across organizations",
+          "summary": "Enterprise administrators can now enforce GitHub Advanced Security configurations so organization and repository administrators cannot override central settings.",
+          "impact": "This makes code-scanning and secret-protection guardrails genuinely hierarchical. Review the enterprise configuration and exception process before switching on enforcement.",
+          "status": "Evaluate",
+          "topics": [
+            "Platform",
+            "DX"
+          ],
+          "published": "2026-09-15",
+          "sourceUrl": "https://github.blog/changelog/2026-09-15-enforce-github-advanced-security-configurations/"
+        },
+        {
+          "title": "GitHub adds governance controls and telemetry for AI-assisted development",
+          "summary": "Copilot adds efficiency, balance, and intelligence model-selection tiers, GA agent-usage metrics for Business and Enterprise, budget requests, and a Sentry integration.",
+          "impact": "Platform teams gain clearer levers for model cost and quality plus adoption measurement. Pilot the controls with explicit privacy, telemetry, and AI-credit policies.",
+          "status": "Evaluate",
+          "topics": [
+            "AI",
+            "DX"
+          ],
+          "published": "2026-09-18",
+          "sourceUrl": "https://github.blog/changelog/2026-09-18-github-copilot-weekly-releases-september-14"
+        },
+        {
+          "title": "GCP Datastream defaults MongoDB-to-BigQuery streams to canonical Extended JSON",
+          "summary": "New MongoDB-source to BigQuery-destination streams now use canonical Extended JSON, explicitly labeling BSON types to preserve fidelity and prevent precision loss.",
+          "impact": "The safer default can change downstream JSON shape. Validate schemas, parsers, and transformations before creating or recreating affected streams.",
+          "status": "Evaluate",
+          "topics": [
+            "GCP",
+            "Platform"
+          ],
+          "published": "2026-09-16",
+          "sourceUrl": "https://docs.cloud.google.com/datastream/docs/release-notes"
+        },
+        {
+          "title": "GitHub exposes code-coverage repository rulesets through its REST API",
+          "summary": "A generally available API can create, update, and read the Restrict code coverage rule, including minimum line coverage and maximum tolerated coverage drops.",
+          "impact": "Platform teams can standardize coverage gates across repositories through automation or IaC instead of accepting UI drift. Define staged rollout and exception handling first.",
+          "status": "Evaluate",
+          "topics": [
+            "DX",
+            "Platform",
+            "IaC"
+          ],
+          "published": "2026-09-18",
+          "sourceUrl": "https://github.blog/changelog/2026-09-18-manage-the-code-coverage-ruleset-condition-with-the-rest-api/"
+        }
+      ]
+    },
+    {
       "issue": 0,
       "slug": "launch-preview",
       "date": "2026-09-19",
