@@ -25,16 +25,9 @@ python -m http.server 8080
 
 Open `http://localhost:8080`.
 
-## GitHub Pages setup
+## Deployment
 
-1. Create a public repository named `cloud-platform-news` under `burnz0`.
-2. Push this project to the `main` branch.
-3. In **Settings → Pages → Build and deployment**, select **GitHub Actions**.
-4. Set the custom domain to `news.burnzo.de`.
-5. In DNS, create `CNAME news → burnz0.github.io`.
-6. After certificate provisioning completes, enable **Enforce HTTPS**.
-
-Do not create a wildcard DNS record for this setup.
+The site is deployed automatically to [news.burnzo.de](https://news.burnzo.de) through GitHub Pages. Every push to `main` triggers the deployment workflow in `.github/workflows/pages.yml`.
 
 ## Automated editions
 
