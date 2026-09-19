@@ -48,10 +48,18 @@ h1 { margin: 0; max-width: 850px; font-family: Georgia, "Times New Roman", serif
 .edition-meta { display: flex; gap: 8px; padding-top: 14px; border-top: 1px solid var(--line-soft); color: #aaa89f; font-size: 11px; }
 .edition-meta span + span::before { content: "·"; padding-right: 8px; color: #4e5a6c; }
 
-.toolbar { display: flex; margin-bottom: 34px; }
+.toolbar { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; margin-bottom: 34px; }
 .filters { display: flex; flex-wrap: wrap; gap: 7px; }
 .filter { padding: 8px 13px; border: 1px solid var(--line); background: transparent; color: var(--muted); font-size: 11px; font-weight: 650; cursor: pointer; }
 .filter:hover, .filter.active { color: var(--bg); border-color: var(--accent); background: var(--accent); }
+.archive-search { width: 36px; min-width: 36px; height: 36px; display: flex; align-items: center; overflow: hidden; border: 1px solid var(--line); transition: width .18s ease; }
+.archive-search.open { width: 250px; }
+.search-toggle { width: 34px; min-width: 34px; height: 34px; display: grid; place-items: center; padding: 0; border: 0; background: transparent; color: var(--muted); cursor: pointer; }
+.search-toggle:hover, .archive-search.open .search-toggle { color: var(--accent); }
+.search-toggle svg { width: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+.archive-search input { width: 0; min-width: 0; padding: 8px 10px 8px 2px; border: 0; outline: 0; opacity: 0; background: transparent; color: var(--text); font-size: 12px; transition: opacity .12s ease; }
+.archive-search.open input { width: 100%; opacity: 1; }
+.archive-search input::placeholder { color: #77756e; }
 
 .content-layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 48px; padding-bottom: 96px; }
 .section-heading { display: flex; justify-content: space-between; gap: 30px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
@@ -98,7 +106,7 @@ footer > p:last-child { margin-left: auto; }
 footer a:hover { color: var(--text); }
 
 @media (max-width: 900px) {
-  .site-header { gap: 24px; }.primary-nav { display: none; }.hero-grid { grid-template-columns: 1fr; gap: 36px; }.content-layout { grid-template-columns: 1fr; }
+  .site-header { gap: 24px; }.primary-nav { display: none; }.hero-grid { grid-template-columns: 1fr; gap: 36px; }.content-layout { grid-template-columns: 1fr; }.toolbar { flex-wrap: wrap; }.archive-search.open { width: 100%; }
 }
 
 @media (max-width: 620px) {
