@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "editions": [
+    {
+      "issue": 0,
+      "slug": "launch-preview",
+      "date": "2026-09-19",
+      "readTime": 2,
+      "summary": "The dashboard is ready. Automated weekly editions begin after repository setup.",
+      "items": [
+        {
+          "title": "High-signal cloud intelligence, without the announcement noise",
+          "summary": "Each edition will distil consequential changes across AWS, Azure, Kubernetes, infrastructure as code and platform engineering into a short architectural briefing.",
+          "impact": "Every signal explains the practical consequence and assigns a clear action level, so the briefing supports decisions instead of merely collecting links.",
+          "status": "Read deeper",
+          "topics": ["Platform", "AWS", "Azure"],
+          "published": "2026-09-19",
+          "sourceUrl": "https://github.com/burnz0/cloud-platform-news"
+        },
+        {
+          "title": "Primary sources and exact dates are built into every edition",
+          "summary": "Official release notes, documentation, security advisories, standards and upstream project announcements take priority over secondary coverage.",
+          "impact": "Direct evidence makes it easier to validate scope, affected regions, deadlines and breaking-change risk before acting.",
+          "status": "Evaluate",
+          "topics": ["Kubernetes", "IaC", "Platform"],
+          "published": "2026-09-19",
+          "sourceUrl": "https://github.com/burnz0/cloud-platform-news"
+        },
+        {
+          "title": "Weekly editions will publish automatically",
+          "summary": "The scheduled research task will prepend a new structured edition, after which the site deploys through GitHub Pages without a manual release step.",
+          "impact": "The archive remains current and versioned while the static site stays inexpensive, fast and operationally simple.",
+          "status": "Watch",
+          "topics": ["Platform", "IaC"],
+          "published": "2026-09-19",
+          "sourceUrl": "https://docs.github.com/en/pages"
+        }
+      ]
+    }
+  ]
+}
