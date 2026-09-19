@@ -116,6 +116,22 @@ document.querySelectorAll(".filter").forEach((button) => button.addEventListener
   renderStories();
 }));
 
+const navLinks = document.querySelectorAll(".primary-nav a");
+
+function setActiveNav(hash = location.hash || "#briefing") {
+  navLinks.forEach((link) => {
+    const active = new URL(link.href, location.href).hash === hash;
+    link.classList.toggle("active", active);
+    if (active) link.setAttribute("aria-current", "page");
+    else link.removeAttribute("aria-current");
+  });
+}
+
+navLinks.forEach((link) => link.addEventListener("click", () => {
+  setActiveNav(new URL(link.href, location.href).hash);
+}));
+window.addEventListener("hashchange", () => setActiveNav());
+
 const searchBox = document.querySelector("#archive-search");
 const searchToggle = document.querySelector("#search-toggle");
 const searchInput = document.querySelector("#search");
@@ -142,4 +158,5 @@ searchInput.addEventListener("keydown", (event) => {
   if (event.key === "Escape") searchToggle.click();
 });
 
+setActiveNav();
 init();
