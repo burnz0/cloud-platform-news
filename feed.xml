@@ -12,5 +12,12 @@
       <pubDate>Sat, 19 Sep 2026 12:00:00 GMT</pubDate>
       <description>The dashboard is ready. Automated weekly editions begin after repository setup.</description>
     </item>
+    <item>
+      <title>Cloud Platform Brief — Issue 1</title>
+      <link>https://news.burnzo.de/?edition=2026-09-19-test-run</link>
+      <guid>https://news.burnzo.de/?edition=2026-09-19-test-run</guid>
+      <pubDate>Sat, 19 Sep 2026 18:34:00 GMT</pubDate>
+      <description>Kubernetes hardens writable volumes, GitHub expands platform governance, and GCP improves MongoDB-to-BigQuery type fidelity.</description>
+    </item>
   </channel>
 </rss>
