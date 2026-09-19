@@ -6,7 +6,7 @@
       "slug": "2026-09-19-test-run",
       "date": "2026-09-19",
       "readTime": 5,
-      "summary": "Kubernetes hardens writable volumes, GitHub expands platform governance, and GCP improves MongoDB-to-BigQuery type fidelity.",
+      "summary": "Kubernetes 1.37 introduces alpha controls for hardening writable volumes. GitHub expands enterprise security enforcement, AI-development governance and automated coverage policies, while GCP changes the default representation for MongoDB-to-BigQuery streams. Architecture teams should review Kubernetes feature-gate pilots and validate downstream schemas before creating new Datastream pipelines. No AWS or Azure changes met the editorial threshold this week.",
       "items": [
         {
           "title": "Kubernetes 1.37 adds native bind-mount and emptyDir hardening",
@@ -14,7 +14,8 @@
           "impact": "Evaluate this for hardened cluster baselines. It can close executable-volume and sticky-bit gaps without init-container workarounds, but requires Alpha gates on the API server and kubelet plus runtime testing.",
           "status": "Evaluate",
           "topics": [
-            "Kubernetes"
+            "Kubernetes",
+            "Security"
           ],
           "published": "2026-09-16",
           "sourceUrl": "https://kubernetes.io/blog/2026/09/16/kubernetes-v1-37-hardening-container-storage/"
@@ -26,7 +27,8 @@
           "status": "Evaluate",
           "topics": [
             "Platform",
-            "DX"
+            "DX",
+            "Security"
           ],
           "published": "2026-09-15",
           "sourceUrl": "https://github.blog/changelog/2026-09-15-enforce-github-advanced-security-configurations/"
@@ -38,7 +40,8 @@
           "status": "Evaluate",
           "topics": [
             "AI",
-            "DX"
+            "DX",
+            "FinOps"
           ],
           "published": "2026-09-18",
           "sourceUrl": "https://github.blog/changelog/2026-09-18-github-copilot-weekly-releases-september-14"
@@ -50,7 +53,8 @@
           "status": "Evaluate",
           "topics": [
             "GCP",
-            "Platform"
+            "Platform",
+            "Reliability"
           ],
           "published": "2026-09-16",
           "sourceUrl": "https://docs.cloud.google.com/datastream/docs/release-notes"
