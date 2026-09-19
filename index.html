@@ -58,11 +58,17 @@
           <button class="filter" data-filter="AI">AI / ML</button>
           <button class="filter" data-filter="DX">DX</button>
         </div>
+        <div class="archive-search" id="archive-search">
+          <button class="search-toggle" id="search-toggle" type="button" aria-label="Search all editions" aria-expanded="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          </button>
+          <input id="search" type="search" aria-label="Search all editions" placeholder="Search all editions" autocomplete="off" />
+        </div>
       </section>
 
       <section class="content-layout">
         <div>
-          <div class="section-heading"><div><h2>This week’s developments</h2></div><p>Selected for architectural impact, urgency and operational reach.</p></div>
+          <div class="section-heading"><div><h2 id="section-title">This week’s developments</h2></div><p id="section-description">Selected for architectural impact, urgency and operational reach.</p></div>
           <div class="stories" id="stories" aria-live="polite"></div>
           <div class="empty-state" id="empty-state" hidden>No stories match this topic.</div>
         </div>
