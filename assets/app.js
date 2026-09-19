@@ -79,6 +79,8 @@ function renderArchive(data) {
   const root = document.querySelector("#archive-list");
   const panel = document.querySelector("#archive");
   const layout = document.querySelector("#content-layout");
+  const toolbar = document.querySelector(".toolbar");
+  const archiveNav = document.querySelector("#archive-nav");
   const previousEditions = data.editions.filter((edition) => edition.issue > 0 && edition.slug !== state.edition.slug);
   root.replaceChildren();
   previousEditions.forEach((edition) => {
@@ -90,6 +92,8 @@ function renderArchive(data) {
   });
   panel.hidden = previousEditions.length === 0;
   layout.classList.toggle("no-archive", previousEditions.length === 0);
+  toolbar.classList.toggle("no-archive", previousEditions.length === 0);
+  archiveNav.hidden = previousEditions.length === 0;
 }
 
 async function init() {
