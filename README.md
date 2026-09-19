@@ -41,3 +41,7 @@ Do not create a wildcard DNS record for this setup.
 The scheduled ChatGPT task owns weekly research and publishing. It prepends a valid edition to `data/briefings.json`, updates `feed.xml`, validates source URLs and commits directly to `main`. The Pages workflow then publishes the update automatically.
 
 The site intentionally contains no API credentials. Repository access remains with the connected GitHub integration, and content generation stays outside the public build.
+
+## Editorial disclaimer
+
+Briefings are generated and curated with AI from the linked primary sources. They may contain errors, omissions or outdated interpretations and do not constitute professional advice. Consequential architecture, security, operational and financial decisions should always be verified against the original sources.
