@@ -1,4 +1,4 @@
-const state = { data: null, filter: "all", edition: null };
+const state = { data: null, filter: "all", query: "", edition: null };
 
 const statusClass = (status) => status.toLowerCase().replaceAll(" ", "-");
 const formatDate = (date) => new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "long", year: "numeric" }).format(new Date(`${date}T12:00:00Z`));
@@ -21,10 +21,20 @@ function renderHeader(edition) {
 function renderStories() {
   const root = document.querySelector("#stories");
   const template = document.querySelector("#story-template");
-  const stories = state.edition.items.filter((item) => {
+  const query = state.query.trim().toLowerCase();
+  const candidates = query
+    ? state.data.editions.flatMap((edition) => edition.items.map((item) => ({ ...item, edition })))
+    : state.edition.items.map((item) => ({ ...item, edition: state.edition }));
+  const stories = candidates.filter((item) => {
     const topicMatch = state.filter === "all" || item.topics.includes(state.filter);
-    return topicMatch;
+    const queryMatch = !query || [item.title, item.summary, item.impact, ...item.topics].join(" ").toLowerCase().includes(query);
+    return topicMatch && queryMatch;
   });
+
+  document.querySelector("#section-title").textContent = query ? "Search results" : "This week’s developments";
+  document.querySelector("#section-description").textContent = query
+    ? "Across all published editions."
+    : "Selected for architectural impact, urgency and operational reach.";
 
   root.replaceChildren();
   stories.forEach((item, index) => {
@@ -45,16 +55,16 @@ function renderStories() {
     node.querySelector("h3").textContent = item.title;
     node.querySelector(".story-summary").textContent = item.summary;
     node.querySelector(".impact p").textContent = item.impact;
-    node.querySelector(".story-date").textContent = item.published ? `Published ${formatDate(item.published)}` : formatDate(state.edition.date);
+    node.querySelector(".story-date").textContent = item.published ? `Published ${formatDate(item.published)}` : formatDate(item.edition.date);
     const link = node.querySelector(".source-link");
     if (item.sourceUrl) link.href = item.sourceUrl;
     else link.hidden = true;
     root.append(node);
   });
   const emptyState = document.querySelector("#empty-state");
-  emptyState.textContent = state.edition.items.length === 0
+  emptyState.textContent = !query && state.edition.items.length === 0
     ? "The first edition will be published Monday at 08:00 Europe/Berlin."
-    : "No stories match this topic.";
+    : query ? "No stories found." : "No stories match this topic.";
   emptyState.hidden = stories.length > 0;
 }
 
@@ -91,5 +101,29 @@ document.querySelectorAll(".filter").forEach((button) => button.addEventListener
   state.filter = button.dataset.filter;
   renderStories();
 }));
+
+const searchBox = document.querySelector("#archive-search");
+const searchToggle = document.querySelector("#search-toggle");
+const searchInput = document.querySelector("#search");
+
+searchToggle.addEventListener("click", () => {
+  const open = searchBox.classList.toggle("open");
+  searchToggle.setAttribute("aria-expanded", String(open));
+  if (open) searchInput.focus();
+  else {
+    searchInput.value = "";
+    state.query = "";
+    renderStories();
+  }
+});
+
+searchInput.addEventListener("input", (event) => {
+  state.query = event.target.value;
+  renderStories();
+});
+
+searchInput.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") searchToggle.click();
+});
 
 init();
