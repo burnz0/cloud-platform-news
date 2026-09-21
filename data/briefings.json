@@ -2,6 +2,93 @@
   "schemaVersion": 1,
   "editions": [
     {
+      "issue": 2,
+      "slug": "2026-09-21-weekly-briefing",
+      "date": "2026-09-21",
+      "readTime": 7,
+      "summary": "This week is dominated by control-plane hardening and migration work: GCP made SPIFFE-based backend mTLS generally available, changed Model Armor defaults with a December retirement deadline, and introduced a breaking Agent Platform SDK boundary. Crossplane operators should patch, while Kubernetes teams should benchmark the new resource-management behavior before enabling it. No AWS or Azure release cleared the editorial threshold.",
+      "items": [
+        {
+          "title": "GCP makes SPIFFE-based backend mTLS generally available",
+          "summary": "Managed workload identity for backend mTLS is now GA across global and regional external, cross-region internal, and regional internal Application Load Balancers. Google provisions and rotates X.509-SVIDs through Certificate Authority Service and Certificate Manager.",
+          "impact": "This removes much of the certificate lifecycle burden from zero-trust service connectivity. Evaluate it for new internal and internet-facing service paths, but design carefully: the backend identity is assigned only at service creation and is immutable.",
+          "status": "Evaluate",
+          "topics": [
+            "GCP",
+            "Security",
+            "Networking"
+          ],
+          "published": "2026-09-18",
+          "sourceUrl": "https://docs.cloud.google.com/load-balancing/docs/managed-workload-identities-load-balancers-overview"
+        },
+        {
+          "title": "GCP Model Armor changes defaults and sets a retirement deadline",
+          "summary": "Filter v4 now backs the Latest alias, while v3 becomes Stable in most regions. Filter versions v1 and v2 move to Legacy and retire on December 17, 2026, with a later Stable rollout for australia-southeast2.",
+          "impact": "Act before the retirement date if templates pin v1 or v2. Test v3 or the Stable alias against representative prompts and responses, document behavioral changes, and avoid relying on Latest where deterministic policy behavior matters.",
+          "status": "Act now",
+          "topics": [
+            "GCP",
+            "AI",
+            "Security"
+          ],
+          "published": "2026-09-18",
+          "sourceUrl": "https://docs.cloud.google.com/release-notes#September_18_2026"
+        },
+        {
+          "title": "GCP Agent Platform SDK 2.0.1 creates a breaking migration boundary",
+          "summary": "Google split agent workloads into the standalone google-cloud-agentplatform package, moved generative modules toward google-genai, removed the global initializer, restructured namespaces, and changed several runtime behaviors and error surfaces.",
+          "impact": "Pin google-cloud-aiplatform below 2.0 until migration tests pass. Audit imports, explicit project and region configuration, response.text handling, OAuth token refresh, streaming calls, and exception handling; some configuration failures can otherwise be silent.",
+          "status": "Act now",
+          "topics": [
+            "GCP",
+            "AI",
+            "DX"
+          ],
+          "published": "2026-09-18",
+          "sourceUrl": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/machine-learning/python-sdk/sdk-migration"
+        },
+        {
+          "title": "Crossplane 2.4.1 fixes stuck package upgrades and security dependencies",
+          "summary": "Crossplane 2.4.1 lets incoming package revisions take ownership of established CRDs directly, preventing providers from remaining unhealthy after an upgrade. It also updates Go, gRPC, and x/crypto for upstream vulnerability fixes.",
+          "impact": "Upgrade maintained 2.x installations promptly, especially where provider revisions have required manual owner-reference repair. Validate provider rollout and rollback paths in a non-production control plane, then remove any operational workaround built around stale revisions.",
+          "status": "Act now",
+          "topics": [
+            "IaC",
+            "Kubernetes",
+            "Security",
+            "Reliability"
+          ],
+          "published": "2026-09-15",
+          "sourceUrl": "https://github.com/crossplane/crossplane/releases/tag/v2.4.1"
+        },
+        {
+          "title": "Kubernetes 1.37 enables Memory QoS by default—but not its policies",
+          "summary": "Memory QoS is Beta and its feature gate is enabled by default on Kubernetes 1.37. Actual cgroup v2 throttling and tiered reservations remain opt-in; the memoryThrottlingFactor default changes to null.",
+          "impact": "Review kubelet configuration during 1.37 planning. Clusters that previously relied on the Alpha default may silently stop writing memory.high unless the factor is explicit, while tiered reservation remains node-wide and can alter reclaim behavior for mixed workloads.",
+          "status": "Evaluate",
+          "topics": [
+            "Kubernetes",
+            "Reliability"
+          ],
+          "published": "2026-09-14",
+          "sourceUrl": "https://kubernetes.io/blog/2026/09/14/kubernetes-v1-37-memory-qos-graduates-to-beta/"
+        },
+        {
+          "title": "Kubernetes pod-level resource managers reach Beta for NUMA-aware workloads",
+          "summary": "Kubernetes 1.37 adds opt-in Beta support for Topology, CPU, and Memory Managers to consume pod-level resource declarations. Primary containers can receive exclusive NUMA-aligned resources while lightweight sidecars share an isolated pool.",
+          "impact": "This can reduce wasted dedicated cores around latency-sensitive or accelerator-adjacent workloads. Benchmark it on representative nodes before adoption, and confirm monitoring and device plugins correctly consume the new top-level PodResources API fields.",
+          "status": "Evaluate",
+          "topics": [
+            "Kubernetes",
+            "AI",
+            "Reliability"
+          ],
+          "published": "2026-09-15",
+          "sourceUrl": "https://kubernetes.io/blog/2026/09/15/kubernetes-v1-37-pod-level-resource-managers-beta/"
+        }
+      ]
+    },
+    {
       "issue": 1,
       "slug": "2026-09-19-test-run",
       "date": "2026-09-19",

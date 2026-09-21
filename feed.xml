@@ -6,6 +6,13 @@
     <description>Consequential developments for cloud and platform architects.</description>
     <language>en</language>
     <item>
+      <title>Cloud Platform Brief — Issue 2</title>
+      <link>https://news.burnzo.de/?edition=2026-09-21-weekly-briefing</link>
+      <guid>https://news.burnzo.de/?edition=2026-09-21-weekly-briefing</guid>
+      <pubDate>Mon, 21 Sep 2026 06:00:00 GMT</pubDate>
+      <description>This week is dominated by control-plane hardening and migration work: GCP made SPIFFE-based backend mTLS generally available, changed Model Armor defaults with a December retirement deadline, and introduced a breaking Agent Platform SDK boundary. Crossplane operators should patch, while Kubernetes teams should benchmark the new resource-management behavior before enabling it. No AWS or Azure release cleared the editorial threshold.</description>
+    </item>
+    <item>
       <title>Cloud Platform Brief — Launch preview</title>
       <link>https://news.burnzo.de/?edition=launch-preview</link>
       <guid>https://news.burnzo.de/?edition=launch-preview</guid>
