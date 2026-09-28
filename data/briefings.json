@@ -2,6 +2,124 @@
   "schemaVersion": 1,
   "editions": [
     {
+      "issue": 3,
+      "slug": "2026-09-28-weekly-briefing",
+      "date": "2026-09-28",
+      "readTime": 9,
+      "summary": "Architecture teams have an unusually dense week: AWS reshaped event-driven integration, added multi-cloud AI inventory, and introduced GPU-aware inference routing, while GKE advanced both node density and sidecarless service networking. Immediate attention belongs on GitHub Actions’ completed Node 20 retirement and Crossplane 2.4.2’s ownership and security fixes. Azure and the main Terraform/OpenTofu tracks produced no additional release that cleared the editorial threshold.",
+      "items": [
+        {
+          "title": "AWS relaunches EventBridge custom buses as durable enterprise brokers",
+          "summary": "Enhanced custom event buses add strict ordering, native CloudEvents-compatible publishing, cross-account sharing through AWS RAM, 24-hour built-in retention extendable to one year, advanced transformations, and a Subscriber resource for delivery to more than 250 AWS services.",
+          "impact": "This materially changes the build-versus-buy decision for central event backbones. Evaluate migration or greenfield patterns around replay, ownership, cross-account authorization, ordering guarantees, quotas, and cost before treating the enhanced bus as a Kafka replacement.",
+          "status": "Evaluate",
+          "topics": [
+            "AWS",
+            "Platform",
+            "Reliability"
+          ],
+          "published": "2026-09-24",
+          "sourceUrl": "https://aws.amazon.com/about-aws/whats-new/2026/09/eventbridge-relaunches-custom-event-buses/"
+        },
+        {
+          "title": "AWS Security Hub can inventory self-hosted AI assets on Azure",
+          "summary": "Security Hub AI Inventory now discovers inference endpoints, models, agents, and frameworks such as Ollama, vLLM, and Hugging Face TGI on Azure virtual machines by using Amazon Inspector SBOM analysis.",
+          "impact": "Multi-cloud security teams can centralize shadow-AI discovery and correlate assets with findings without adding another inventory platform. Validate Azure access boundaries, SBOM coverage, data flows, and false-positive handling before organization-wide rollout. The capability is included with Security Hub Essentials.",
+          "status": "Evaluate",
+          "topics": [
+            "AWS",
+            "Azure",
+            "AI",
+            "Security"
+          ],
+          "published": "2026-09-22",
+          "sourceUrl": "https://aws.amazon.com/about-aws/whats-new/2026/09/security-hub-ai-inventory-azure-support/"
+        },
+        {
+          "title": "SageMaker HyperPod adds GPU-aware inference routing on EKS",
+          "summary": "The new HyperPod Inference Gateway is an EKS managed add-on that routes OpenAI-compatible traffic using model name, KV-cache use, queue depth, LoRA residency, prefix-cache hits, predicted latency, and active requests.",
+          "impact": "This targets a real efficiency gap in multi-model GPU fleets and works with vLLM and SGLang without application changes. Benchmark first-token latency, failure behavior, observability, tenancy isolation, and gateway cost against your existing Envoy or inference-routing design.",
+          "status": "Evaluate",
+          "topics": [
+            "AWS",
+            "Kubernetes",
+            "AI",
+            "Observability"
+          ],
+          "published": "2026-09-24",
+          "sourceUrl": "https://aws.amazon.com/about-aws/whats-new/2026/09/sagemaker-hyperpod-inference-gateway/"
+        },
+        {
+          "title": "GitHub Actions has removed Node 20 runtime support",
+          "summary": "GitHub-hosted runners now execute JavaScript actions with Node 24, and the temporary ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION escape hatch has been removed. Node 24 also drops support for macOS 13.4 and earlier and ARM32 self-hosted runners.",
+          "impact": "Audit every pinned third-party and internal JavaScript action now. Upgrade maintained actions, publish Node 24 releases for custom actions, and replace unsupported self-hosted runner platforms; workflows that depended on the opt-out no longer have a compatibility path.",
+          "status": "Act now",
+          "topics": [
+            "Platform",
+            "DX",
+            "Security"
+          ],
+          "published": "2026-09-23",
+          "sourceUrl": "https://github.blog/changelog/2026-09-23-node-20-is-no-longer-available-in-github-actions/"
+        },
+        {
+          "title": "GitHub previews fresh authentication for high-impact enterprise actions",
+          "summary": "Enterprise Managed Users on GitHub Enterprise Cloud with Microsoft Entra ID can require re-authentication or MFA before token creation, webhook edits, organization security changes, recovery-code access, and other sensitive operations.",
+          "impact": "This directly reduces risk from stolen sessions and overreaching automation. Evaluate an Entra Conditional Access policy and administrator runbook, but account for the current public-preview scope and two-hour post-challenge sudo session.",
+          "status": "Evaluate",
+          "topics": [
+            "Platform",
+            "Security",
+            "DX"
+          ],
+          "published": "2026-09-24",
+          "sourceUrl": "https://github.blog/changelog/2026-09-24-require-proof-of-presence-for-high-impact-actions/"
+        },
+        {
+          "title": "Crossplane 2.4.2 fixes another package-revision ownership failure",
+          "summary": "Crossplane 2.4.2 corrects ServiceAccount ownership transfer to newly active package revisions, updates an OpenTelemetry exporter dependency for security, and changes claims to fail closed when their XRD cannot be listed.",
+          "impact": "Upgrade Crossplane 2.4 installations promptly, particularly after moving to 2.4.1 for the earlier CRD handover fix. Test provider activation, ServiceAccount ownership, claims, and rollback behavior together because the fixes affect control-plane availability and authorization.",
+          "status": "Act now",
+          "topics": [
+            "IaC",
+            "Kubernetes",
+            "Security",
+            "Reliability"
+          ],
+          "published": "2026-09-22",
+          "sourceUrl": "https://github.com/crossplane/crossplane/releases/tag/v2.4.2"
+        },
+        {
+          "title": "GKE Standard doubles the maximum pod density per node",
+          "summary": "GKE Standard nodes can now run up to 512 Pods instead of 256. Nodes configured above 256 Pods receive a /22 Pod CIDR containing 1,024 addresses.",
+          "impact": "Higher density may lower node overhead for small workloads, but it increases per-node blast radius and changes IPAM calculations. Revisit subnet secondary-range sizing, CNI and kube-proxy scaling, DaemonSet overhead, disruption budgets, and node recovery time before adoption.",
+          "status": "Evaluate",
+          "topics": [
+            "GCP",
+            "Kubernetes",
+            "Networking",
+            "FinOps"
+          ],
+          "published": "2026-09-25",
+          "sourceUrl": "https://docs.cloud.google.com/kubernetes-engine/docs/release-notes#September_25_2026"
+        },
+        {
+          "title": "GKE previews a sidecarless Layer 4 service mesh",
+          "summary": "Allowlisted GKE clusters can preview ambient networking through Dataplane V2 and Gateway API, providing node-level mTLS, service discovery, Layer 4 traffic management, and telemetry without per-Pod proxies or workload restarts.",
+          "impact": "The operating model is attractive, but this is not production-ready: interoperability with sidecar-injected workloads and proxyless gRPC is absent, several workload types are unsupported, and component failure can bypass inbound authentication and authorization enforcement.",
+          "status": "Watch",
+          "topics": [
+            "GCP",
+            "Kubernetes",
+            "Networking",
+            "Security"
+          ],
+          "published": "2026-09-24",
+          "sourceUrl": "https://docs.cloud.google.com/kubernetes-engine/docs/concepts/ambient-overview"
+        }
+      ]
+    },
+    {
       "issue": 2,
       "slug": "2026-09-21-weekly-briefing",
       "date": "2026-09-21",
