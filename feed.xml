@@ -5,6 +5,14 @@
     <link>https://news.burnzo.de/</link>
     <description>Consequential developments for cloud and platform architects.</description>
     <language>en</language>
+  <item>
+    <title>Cloud Platform Brief — Issue 4</title>
+    <link>https://news.burnzo.de/?edition=2026-10-05-weekly-briefing</link>
+    <guid isPermaLink="true">https://news.burnzo.de/?edition=2026-10-05-weekly-briefing</guid>
+    <pubDate>Mon, 05 Oct 2026 06:00:00 GMT</pubDate>
+    <description>This week is led by lifecycle and upgrade pressure: AWS announced multiple service sunsets, GitHub began enforcing minimum self-hosted runner versions, and GitHub data-residency clients face an October 7 TLS deadline. OpenTofu 1.13 and EKS 1.37 both require deliberate compatibility testing, while GKE previews coordinated HPA/VPA rightsizing. AWS also previewed architecture remediation with AI; Azure produced no release that cleared the editorial threshold.</description>
+  </item>
+
     <item>
       <title>Cloud Platform Brief — Issue 3</title>
       <link>https://news.burnzo.de/?edition=2026-09-28-weekly-briefing</link>

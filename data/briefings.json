@@ -2,6 +2,120 @@
   "schemaVersion": 1,
   "editions": [
     {
+      "issue": 4,
+      "slug": "2026-10-05-weekly-briefing",
+      "date": "2026-10-05",
+      "readTime": 9,
+      "summary": "This week is led by lifecycle and upgrade pressure: AWS announced multiple service sunsets, GitHub began enforcing minimum self-hosted runner versions, and GitHub data-residency clients face an October 7 TLS deadline. OpenTofu 1.13 and EKS 1.37 both require deliberate compatibility testing, while GKE previews coordinated HPA/VPA rightsizing. AWS also previewed architecture remediation with AI; Azure produced no release that cleared the editorial threshold.",
+      "items": [
+        {
+          "title": "AWS sets migration deadlines for DevOps Guru, Managed Blockchain, Infrastructure Composer, and other services",
+          "summary": "AWS placed Chime SDK SIP Media Application and WorkSpaces Secure Browser into maintenance for new customers from October 29, 2026. Managed Blockchain, DevOps Guru, and the Backint Agent for SAP ASE will end support in September 2027, while the standalone Infrastructure Composer console ends on December 7, 2026.",
+          "impact": "Inventory affected accounts and workloads now. The Infrastructure Composer deadline is immediate enough to require owner assignment and a migration plan this quarter; longer-dated sunsets should enter architecture roadmaps, budgets, and support-risk registers before replacement work competes with 2027 delivery.",
+          "status": "Act now",
+          "topics": [
+            "AWS",
+            "Platform",
+            "Reliability"
+          ],
+          "published": "2026-09-29",
+          "sourceUrl": "https://aws.amazon.com/about-aws/whats-new/2026/09/aws-service-availability/"
+        },
+        {
+          "title": "GitHub now enforces minimum versions for self-hosted Actions runners",
+          "summary": "GitHub Enterprise Cloud began full enforcement on September 29. Self-hosted runners below version 2.329.0 can no longer register or re-register, and runners below GitHub's higher job-execution minimum stop receiving workflow jobs even when already registered.",
+          "impact": "Check every runner group and autoscaling image immediately, including ephemeral fleets and Actions Runner Controller templates. Upgrade pinned binaries and images, then automate checks against GitHub's runner-version deprecation API so future enforcement dates become monitored operational events rather than CI outages.",
+          "status": "Act now",
+          "topics": [
+            "Platform",
+            "DX",
+            "Reliability"
+          ],
+          "published": "2026-09-28",
+          "sourceUrl": "https://github.blog/changelog/2026-09-28-self-hosted-runner-version-enforcement-date-has-moved/"
+        },
+        {
+          "title": "GitHub data-residency endpoints drop X25519-only TLS clients on October 7",
+          "summary": "GitHub Enterprise Cloud with data residency will stop accepting HTTPS clients that offer only X25519 key agreement on October 7, 2026. P-256 and P-384 remain supported, and SSH is unaffected.",
+          "impact": "If you use GHE.com data residency, test application clients, proxies, TLS inspection appliances, GitHub CLI builds, and custom runtimes before Wednesday. Remove X25519-only policies and ensure P-256 is enabled; otherwise affected integrations will fail at TLS negotiation with no application-level recovery path.",
+          "status": "Act now",
+          "topics": [
+            "Platform",
+            "Security",
+            "Networking"
+          ],
+          "published": "2026-09-30",
+          "sourceUrl": "https://github.blog/changelog/2026-09-30-x25519-only-tls-ends-for-ghe-com-on-september-15/"
+        },
+        {
+          "title": "OpenTofu 1.13 removes WinRM provisioners and narrows legacy platform support",
+          "summary": "OpenTofu 1.13 adds Windows ARM64 packages, new functions for reducing unknown values during planning, and experimental linting and symbol libraries. Compatibility changes remove WinRM provisioner connections, require macOS 13 or later, alter base64gzip bytes, and make 1.13 the final series with 32-bit builds.",
+          "impact": "Treat this as a planned toolchain upgrade rather than a routine patch. Search modules for WinRM connections and byte-sensitive base64gzip use, validate CI and developer platforms, and adopt the 1.13.1 patch rather than 1.13.0 after testing ephemeral resources and plan JSON consumers.",
+          "status": "Evaluate",
+          "topics": [
+            "IaC",
+            "DX"
+          ],
+          "published": "2026-09-30",
+          "sourceUrl": "https://github.com/opentofu/opentofu/releases/tag/v1.13.0"
+        },
+        {
+          "title": "Amazon EKS adds Kubernetes 1.37 across all regions",
+          "summary": "EKS and EKS Distro now support Kubernetes 1.37 everywhere EKS is available. The release promotes metrics.k8s.io/v1 and DRA device taints and tolerations to GA, while HPA scale-to-zero becomes Beta and enabled by default for object or external metrics.",
+          "impact": "Build an upgrade test plan around metrics clients, autoscaling behavior, admission policies, add-ons, and GPU scheduling. Scale-to-zero can lower idle cost but changes cold-start and availability assumptions; use EKS cluster insights before advancing production clusters and keep rollback criteria explicit.",
+          "status": "Evaluate",
+          "topics": [
+            "AWS",
+            "Kubernetes",
+            "Reliability",
+            "FinOps"
+          ],
+          "published": "2026-10-02",
+          "sourceUrl": "https://aws.amazon.com/about-aws/whats-new/2026/10/amazon-eks-distro-kubernetes-version-1-37/"
+        },
+        {
+          "title": "GKE previews coordinated HPA and VPA CPU rightsizing",
+          "summary": "GKE can now combine HPA replica scaling with VPA CPU-request rightsizing without the two controllers destabilizing each other's utilization baseline. The public preview requires GKE 1.36.3-gke.1630000 or later and supports up to 60,000 containers per cluster.",
+          "impact": "Pilot this on variable-load services with expensive request overprovisioning. Run VPA in recommendation-only mode for several traffic cycles, bound its changes, account for startup spikes, and configure GitOps tools such as Argo CD to ignore autoscaler-managed resource drift before enabling automatic updates.",
+          "status": "Evaluate",
+          "topics": [
+            "GCP",
+            "Kubernetes",
+            "FinOps",
+            "Reliability"
+          ],
+          "published": "2026-10-02",
+          "sourceUrl": "https://docs.cloud.google.com/kubernetes-engine/docs/how-to/rightsize-hpa-workloads-with-vpa"
+        },
+        {
+          "title": "GitHub can synchronize repository governance metadata from external systems",
+          "summary": "External custom properties in public preview let a CMDB, developer portal, or internal platform remain the authoritative source for repository ownership, service tier, lifecycle, and compliance metadata. Values are read-only in GitHub but remain usable for filtering and ruleset targeting.",
+          "impact": "This can remove duplicated ownership metadata between an internal developer platform and GitHub while making governance policy context-aware. Evaluate API ownership, reconciliation, failure handling, namespaces, and auditability before connecting catalog data to rulesets that can block delivery.",
+          "status": "Evaluate",
+          "topics": [
+            "Platform",
+            "DX"
+          ],
+          "published": "2026-09-29",
+          "sourceUrl": "https://github.blog/changelog/2026-09-29-bring-business-context-with-external-custom-properties/"
+        },
+        {
+          "title": "AWS previews an AI agent for Well-Architected reviews and IaC remediation",
+          "summary": "AWS Well-Architected Agent analyzes topology, configuration, and utilization across more than 65 services, prioritizes findings against declared goals, and can propose console steps, CLI commands, or changes to Terraform, CloudFormation, and CDK. The preview is hosted in three US regions but can inspect commercial-region workloads.",
+          "impact": "Evaluate only in a sandbox with tightly scoped read roles and human-controlled remediation. The cross-pillar prioritization and pre-deployment IaC review could reduce review toil, but generated findings and code may be incomplete; define evidence, approval, version-control, and rollback requirements before workflow integration.",
+          "status": "Watch",
+          "topics": [
+            "AWS",
+            "AI",
+            "IaC",
+            "Platform"
+          ],
+          "published": "2026-10-01",
+          "sourceUrl": "https://aws.amazon.com/blogs/aws/announcing-aws-well-architected-agent-an-ai-powered-intelligence-to-optimize-your-cloud-environment-preview/"
+        }
+      ]
+    },
+    {
       "issue": 3,
       "slug": "2026-09-28-weekly-briefing",
       "date": "2026-09-28",
