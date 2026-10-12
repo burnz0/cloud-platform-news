@@ -6,6 +6,13 @@
     <description>Consequential developments for cloud and platform architects.</description>
     <language>en</language>
   <item>
+    <title>Cloud Platform Brief — Issue 5</title>
+    <link>https://news.burnzo.de/?edition=2026-10-12-weekly-briefing</link>
+    <guid isPermaLink="true">https://news.burnzo.de/?edition=2026-10-12-weekly-briefing</guid>
+    <pubDate>Mon, 12 Oct 2026 06:00:00 GMT</pubDate>
+    <description>This week shifts from broad feature launches to governance and controlled change. Pulumi’s GCP provider 10.0 introduces replacements and removals that demand stack-by-stack testing, while GitHub makes local agent sandboxing enforceable and previews credit-backed AI secret checks. Azure changes Kubernetes posture findings at controller scope; AWS adds sovereignty guidance and useful multicloud and DevOps-agent patterns. No upstream Kubernetes or Terraform/OpenTofu release cleared the threshold.</description>
+  </item>
+  <item>
     <title>Cloud Platform Brief — Issue 4</title>
     <link>https://news.burnzo.de/?edition=2026-10-05-weekly-briefing</link>
     <guid isPermaLink="true">https://news.burnzo.de/?edition=2026-10-05-weekly-briefing</guid>

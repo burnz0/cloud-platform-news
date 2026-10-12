@@ -2,6 +2,112 @@
   "schemaVersion": 1,
   "editions": [
     {
+      "issue": 5,
+      "slug": "2026-10-12-weekly-briefing",
+      "date": "2026-10-12",
+      "readTime": 8,
+      "summary": "This week shifts from broad feature launches to governance and controlled change. Pulumi’s GCP provider 10.0 introduces replacements and removals that demand stack-by-stack testing, while GitHub makes local agent sandboxing enforceable and previews credit-backed AI secret checks. Azure changes Kubernetes posture findings at controller scope; AWS adds sovereignty guidance and useful multicloud and DevOps-agent patterns. No upstream Kubernetes or Terraform/OpenTofu release cleared the threshold.",
+      "items": [
+        {
+          "title": "Pulumi GCP 10.0 introduces resource replacements, removals, and changed defaults",
+          "summary": "Pulumi’s GCP provider 10.0 tracks terraform-provider-google-beta 8.5 and contains breaking changes across BigQuery, Cloud Run, Compute, GKE, IAP, notebooks, Secret Manager, monitoring, and Workflows. A guestAccelerator count of zero can replace an instance, load-balancing defaults change, and several resources or modules are removed.",
+          "impact": "Pin version 9.x until each stack is assessed with Pulumi’s migration guide. Refresh state before the version bump, run the documented post-upgrade refresh with the program, and inspect previews especially for instance replacement, network exposure, deleted fields, IAP resources, and notebooks.",
+          "status": "Act now",
+          "topics": [
+            "GCP",
+            "IaC",
+            "Reliability"
+          ],
+          "published": "2026-10-05",
+          "sourceUrl": "https://github.com/pulumi/pulumi-gcp/releases/tag/v10.0.0"
+        },
+        {
+          "title": "GitHub makes local sandboxing for Copilot agents generally available",
+          "summary": "Copilot CLI, the Copilot app, and VS Code Agent Host can now execute agent-initiated tools inside local sandboxes on Windows, macOS, and Linux. Policies can restrict filesystem, network, Git credentials, GitHub CLI credentials, local MCP servers, and language servers, and enterprise administrators can enforce settings developers cannot weaken.",
+          "impact": "Establish a default-deny sandbox baseline before expanding autonomous coding-agent use. Define approved workspace paths, network destinations, credential access, and exceptions; test developer tooling on all supported operating systems and treat model policy and execution isolation as separate controls.",
+          "status": "Evaluate",
+          "topics": [
+            "Platform",
+            "DX",
+            "Security",
+            "AI"
+          ],
+          "published": "2026-10-07",
+          "sourceUrl": "https://github.blog/changelog/2026-10-07-local-sandboxing-for-github-copilot-now-generally-available/"
+        },
+        {
+          "title": "GitHub expands AI secret detection and pre-announces usage-based billing",
+          "summary": "GitHub automatically moved existing AI-detected password alerts to a purpose-built contextual model. AI push protection for unstructured credentials is in private preview, GHES 3.23 will receive AI-detected alerts in public preview, and planned push-protection and Copilot security-review checks will consume AI Credits.",
+          "impact": "Keep existing alert scanning enabled, but do not enable credit-consuming previews without security and FinOps ownership. Define organization policy, budgets with stop-usage behavior, alert triage, false-positive handling, and metrics before expanding AI checks across repositories or agent workflows.",
+          "status": "Watch",
+          "topics": [
+            "Platform",
+            "Security",
+            "AI",
+            "FinOps"
+          ],
+          "published": "2026-10-07",
+          "sourceUrl": "https://github.blog/changelog/2026-10-07-purpose-built-model-for-leaked-secret-detection/"
+        },
+        {
+          "title": "Azure Defender moves Kubernetes posture findings to controller scope",
+          "summary": "Microsoft Defender for Cloud now reports Kubernetes Security Posture Management misconfigurations at the top-level workload controller, such as a Deployment or StatefulSet, instead of every running container instance. The change is generally available and can alter affected recommendations and Secure Score results.",
+          "impact": "Rebaseline dashboards, exports, exemptions, ticket automation, and Secure Score expectations. Controller-level findings should reduce duplicate remediation work and align ownership with deployable objects, but integrations that key on Pod or container identifiers may need mapping changes.",
+          "status": "Evaluate",
+          "topics": [
+            "Azure",
+            "Kubernetes",
+            "Security",
+            "Platform"
+          ],
+          "published": "2026-10-05",
+          "sourceUrl": "https://learn.microsoft.com/en-us/azure/defender-for-cloud/release-notes#kspm-misconfiguration-recommendations-moving-to-controller-level-scope-ga"
+        },
+        {
+          "title": "AWS publishes a Digital Sovereignty Lens for Well-Architected reviews",
+          "summary": "The new lens frames sovereign workloads around locality, access control, continuity, portability, and auditability. It provides 21 questions and 37 practices across operational excellence, security, reliability, and performance, and maps technical controls such as SCPs, RCPs, IAM, firewall, backup, Config, and CloudFormation Guard to operational evidence.",
+          "impact": "Use the lens to turn vague sovereignty requirements into recorded architectural decisions with legal, compliance, security, and engineering owners. Pay particular attention to jurisdiction-constrained disaster recovery, operator location, external dependencies, generative-AI data flows, exit options, and continuously collected evidence.",
+          "status": "Read deeper",
+          "topics": [
+            "AWS",
+            "Security",
+            "Reliability",
+            "Platform"
+          ],
+          "published": "2026-10-05",
+          "sourceUrl": "https://aws.amazon.com/blogs/architecture/announcing-the-aws-digital-sovereignty-well-architected-lens/"
+        },
+        {
+          "title": "AWS documents a production-minded pattern for private AWS–GCP connectivity",
+          "summary": "AWS published an end-to-end architecture for AWS Interconnect – multicloud with Google Cloud Partner Cross-Cloud Interconnect. The managed path uses four connections across at least two facilities, ECMP, MACsec on the provider-router hop, Direct Connect gateways, Transit Gateway or Cloud WAN attachment options, and coordinated activation-key provisioning.",
+          "impact": "Read this before designing new inter-provider VPN or colocation connectivity. Validate paired regions, non-overlapping CIDRs, routing symmetry, quotas, hourly charges on both clouds, and end-to-end encryption because MACsec does not protect the entire workload-to-workload path. Convert the tested design into reviewed IaC rather than relying on agent-executed CLI history.",
+          "status": "Read deeper",
+          "topics": [
+            "AWS",
+            "GCP",
+            "Networking",
+            "Reliability"
+          ],
+          "published": "2026-10-06",
+          "sourceUrl": "https://aws.amazon.com/blogs/networking-and-content-delivery/provisioning-aws-interconnect-multicloud-with-the-kiro-agentic-ide/"
+        },
+        {
+          "title": "AWS DevOps Agent expands regions and documents shared-VPC private connections",
+          "summary": "AWS DevOps Agent became available in Ohio, Seoul, Paris, and Stockholm and added guidance for private connections into VPCs shared through AWS RAM. Seoul Agent Spaces route inference across AWS Regions rather than keeping it within one geography.",
+          "impact": "The European regions improve latency and deployment options for platform operations, but region availability must not be mistaken for inference residency. Validate data-flow and residency requirements, shared-VPC ownership, Resource Gateway lifecycle, IAM boundaries, and evidence retention before connecting production telemetry, repositories, or operational tools.",
+          "status": "Evaluate",
+          "topics": [
+            "AWS",
+            "AI",
+            "Platform",
+            "Networking"
+          ],
+          "published": "2026-10-09",
+          "sourceUrl": "https://docs.aws.amazon.com/devopsagent/latest/userguide/whats-new.html"
+        }
+      ]
+    },
+    {
       "issue": 4,
       "slug": "2026-10-05-weekly-briefing",
       "date": "2026-10-05",
