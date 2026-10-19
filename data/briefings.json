@@ -2,6 +2,99 @@
   "schemaVersion": 1,
   "editions": [
     {
+      "issue": 6,
+      "slug": "2026-10-19-weekly-briefing",
+      "date": "2026-10-19",
+      "readTime": 7,
+      "summary": "This week brings two migration deadlines and several architectural shifts. Azure has retired GPv1 and legacy Blob accounts, while GitHub will remove three Copilot models on November 16; both require immediate inventory and owner assignment. AWS introduces HTTP-native Lambda Web Functions and richer log routing, GCP makes service perimeters hierarchy-aware, and GitHub operationalizes agentic code-scanning fixes. Kubernetes and the main IaC projects produced no release that cleared the threshold.",
+      "items": [
+        {
+          "title": "Azure retires GPv1 and legacy Blob storage accounts",
+          "summary": "Microsoft’s October 13 retirement deadline has passed for general-purpose v1 and legacy Blob-only storage accounts. Remaining accounts will be converted to GPv2 in waves beginning in early November, with GPv2 billing expected to apply from November; upgrades are irreversible and can change transaction and tiering costs.",
+          "impact": "Inventory every non-StorageV2 account immediately, confirm whether Microsoft has already scheduled or started conversion, and model the new transaction and access-tier charges. Validate backup, lifecycle, redundancy, and application assumptions before the platform-controlled migration removes control over timing.",
+          "status": "Act now",
+          "topics": [
+            "Azure",
+            "Reliability",
+            "FinOps"
+          ],
+          "published": "2026-10-13",
+          "sourceUrl": "https://learn.microsoft.com/en-us/azure/storage/common/general-purpose-version-1-account-migration-overview"
+        },
+        {
+          "title": "GitHub will retire three Copilot models on November 16",
+          "summary": "GitHub will remove Claude Opus 4.8, Claude Opus 5, and GPT-5.6 Terra from Copilot Chat, inline edits, ask and agent modes, and code completion on November 16, 2026. Business and Enterprise tenants using default model enablement receive suggested alternatives automatically; restrictive model policies may block them.",
+          "impact": "Search instructions, agent configurations, evaluations, and governance policies for explicit model dependencies. Enable and test approved replacements before the deadline, re-run quality and cost baselines, and communicate behavior changes to teams rather than relying on automatic model substitution.",
+          "status": "Act now",
+          "topics": [
+            "AI",
+            "Platform",
+            "DX",
+            "Reliability"
+          ],
+          "published": "2026-10-15",
+          "sourceUrl": "https://github.blog/changelog/2026-10-15-upcoming-deprecation-of-selected-github-copilot-models-in-mid-november/"
+        },
+        {
+          "title": "AWS introduces HTTP-native Lambda Web Functions",
+          "summary": "Lambda Web Functions run standard Node.js HTTP servers without event-handler adapters. Each Arm64 Node.js 24 environment can process up to 128 concurrent requests, uses active-CPU plus memory-duration billing, supports native streaming, VPC access, weighted revisions, CloudFront OAC, and optional best-effort multi-Region routing through one global endpoint.",
+          "impact": "Benchmark this against Lambda Event Functions, API Gateway, App Runner, and ECS Fargate for I/O-heavy APIs, SSR, streaming, and lightweight inference. Validate concurrency isolation, connection handling, memory cost, regional availability, routing and residency behavior, observability, and failure semantics before defining a new golden path.",
+          "status": "Evaluate",
+          "topics": [
+            "AWS",
+            "Platform",
+            "DX",
+            "Reliability"
+          ],
+          "published": "2026-10-12",
+          "sourceUrl": "https://aws.amazon.com/blogs/aws/announcing-aws-lambda-web-functions-for-fast-consistent-web-app-performance-anywhere/"
+        },
+        {
+          "title": "GCP makes VPC Service Controls hierarchy-aware",
+          "summary": "VPC Service Controls can now place entire folders inside service perimeters and reference folders or organizations in ingress and egress rules. Projects and nested folders inherit protection as the resource hierarchy changes; dry-run mode supports the same membership model. The capabilities are generally available at no additional charge.",
+          "impact": "This can replace brittle project-by-project perimeter automation, but hierarchy moves now become security-sensitive changes. Pilot in dry-run, review folder ownership and move permissions, test shared-service access, and add policy checks so reorganizing projects cannot unexpectedly block workloads or broaden data-exfiltration paths.",
+          "status": "Evaluate",
+          "topics": [
+            "GCP",
+            "Security",
+            "Networking",
+            "Platform"
+          ],
+          "published": "2026-10-15",
+          "sourceUrl": "https://cloud.google.com/blog/products/identity-security/introducing-new-scalable-perimeter-options-with-vpc-service-controls"
+        },
+        {
+          "title": "GitHub makes agentic CodeQL remediation generally available",
+          "summary": "Agentic autofix can explore a repository, propose a multi-file fix for default-branch code-scanning alerts, rerun CodeQL, iterate, and open a draft pull request. Administrators must enable the enterprise policy; batches can contain up to 25 alerts and consume both Code Security AI Credits and GitHub Actions minutes.",
+          "impact": "Run a controlled pilot on well-understood alert classes with mandatory review and branch protections. Measure closure quality, regressions, Actions consumption, and AI-credit cost; define which severities may be assigned automatically and keep deployment approval separate from generated remediation.",
+          "status": "Evaluate",
+          "topics": [
+            "Security",
+            "AI",
+            "Platform",
+            "DX",
+            "FinOps"
+          ],
+          "published": "2026-10-15",
+          "sourceUrl": "https://github.blog/changelog/2026-10-15-agentic-autofix-for-code-scanning-alerts-general-availability/"
+        },
+        {
+          "title": "CloudWatch pipelines add conditional log routing and chained parsers",
+          "summary": "CloudWatch pipelines can now route individual events to different log groups using conditions evaluated against processed fields. Multiple parsers can run in sequence, allowing formats such as a JSON envelope containing a Grok-parsed payload to be normalized and split by severity, source, or event type.",
+          "impact": "Evaluate consolidation of bespoke Lambda, Firehose, or agent-side parsing, especially where routing can enforce distinct retention and access policies. Test malformed-event handling, route overlap, parser cost, cardinality, backpressure, and replay behavior before moving production ingestion paths.",
+          "status": "Evaluate",
+          "topics": [
+            "AWS",
+            "Observability",
+            "Platform",
+            "FinOps"
+          ],
+          "published": "2026-10-14",
+          "sourceUrl": "https://aws.amazon.com/about-aws/whats-new/2026/10/cloudwatch-pipelines-log-routing/"
+        }
+      ]
+    },
+    {
       "issue": 5,
       "slug": "2026-10-12-weekly-briefing",
       "date": "2026-10-12",

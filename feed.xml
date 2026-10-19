@@ -6,6 +6,13 @@
     <description>Consequential developments for cloud and platform architects.</description>
     <language>en</language>
   <item>
+    <title>Cloud Platform Brief — Issue 6</title>
+    <link>https://news.burnzo.de/?edition=2026-10-19-weekly-briefing</link>
+    <guid isPermaLink="true">https://news.burnzo.de/?edition=2026-10-19-weekly-briefing</guid>
+    <pubDate>Mon, 19 Oct 2026 06:00:00 GMT</pubDate>
+    <description>This week brings two migration deadlines and several architectural shifts. Azure has retired GPv1 and legacy Blob accounts, while GitHub will remove three Copilot models on November 16; both require immediate inventory and owner assignment. AWS introduces HTTP-native Lambda Web Functions and richer log routing, GCP makes service perimeters hierarchy-aware, and GitHub operationalizes agentic code-scanning fixes. Kubernetes and the main IaC projects produced no release that cleared the threshold.</description>
+  </item>
+  <item>
     <title>Cloud Platform Brief — Issue 5</title>
     <link>https://news.burnzo.de/?edition=2026-10-12-weekly-briefing</link>
     <guid isPermaLink="true">https://news.burnzo.de/?edition=2026-10-12-weekly-briefing</guid>
