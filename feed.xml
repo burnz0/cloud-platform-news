@@ -6,6 +6,14 @@
     <description>Consequential developments for cloud and platform architects.</description>
     <language>en</language>
   <item>
+    <title>Cloud Platform Brief — Issue 7</title>
+    <link>https://news.burnzo.de/?edition=2026-10-26-weekly-briefing</link>
+    <guid isPermaLink="true">https://news.burnzo.de/?edition=2026-10-26-weekly-briefing</guid>
+    <pubDate>Mon, 26 Oct 2026 07:00:00 GMT</pubDate>
+    <description>Security and platform standardization dominate this week. GKE operators should urgently patch for compromised CA keys, and locked-down GitHub Actions environments must allow new blob endpoints. AWS launched managed ECS ingress and context-aware code vulnerability remediation; GitHub expanded enterprise GitHub App governance, OpenTofu shipped a security-fixing patch, and GCP added enforceable Model Armor baselines. Azure, upstream Kubernetes, Terraform, Pulumi, and Crossplane produced no additional release above the threshold.</description>
+  </item>
+
+  <item>
     <title>Cloud Platform Brief — Issue 6</title>
     <link>https://news.burnzo.de/?edition=2026-10-19-weekly-briefing</link>
     <guid isPermaLink="true">https://news.burnzo.de/?edition=2026-10-19-weekly-briefing</guid>

@@ -2,6 +2,113 @@
   "schemaVersion": 1,
   "editions": [
     {
+      "issue": 7,
+      "slug": "2026-10-26-weekly-briefing",
+      "date": "2026-10-26",
+      "readTime": 8,
+      "summary": "Security and platform standardization dominate this week. GKE operators should urgently patch for compromised CA keys, and locked-down GitHub Actions environments must allow new blob endpoints. AWS launched managed ECS ingress and context-aware code vulnerability remediation; GitHub expanded enterprise GitHub App governance, OpenTofu shipped a security-fixing patch, and GCP added enforceable Model Armor baselines. Azure, upstream Kubernetes, Terraform, Pulumi, and Crossplane produced no additional release above the threshold.",
+      "items": [
+        {
+          "title": "Compromised CA keys require GKE node and container updates",
+          "summary": "Google’s GCP-2026-071 bulletin says compromised eMudhra subordinate CA keys can enable active man-in-the-middle interception and traffic spoofing for unpatched TLS clients. All supported GKE Standard and Autopilot versions using Container-Optimized OS or Ubuntu images are affected; customer containers carry independent trust stores and are not fixed by upgrading nodes.",
+          "impact": "Manually upgrade COS node pools to Google’s listed patched GKE versions rather than waiting for auto-upgrade, rebuild workload images from patched bases, and update gcloud and self-managed operating-system trust stores. Audit external admission webhooks for an explicit caBundle and use digest pinning or Binary Authorization where immediate patching is impossible.",
+          "status": "Act now",
+          "topics": [
+            "GCP",
+            "Kubernetes",
+            "Security",
+            "Reliability"
+          ],
+          "published": "2026-10-23",
+          "sourceUrl": "https://docs.cloud.google.com/kubernetes-engine/security-bulletins#gcp-2026-071"
+        },
+        {
+          "title": "GitHub Actions adds blob-storage endpoints that may require allowlist changes",
+          "summary": "GitHub added two new inclusive Azure Blob hostname ranges for Actions job summaries and logs: productionresultssa30 through 49 and productionresultssa100 through 199. Environments already allowing the productionresultssa wildcard need no change; installations that enumerate hosts can lose access as traffic moves to the new endpoints.",
+          "impact": "Check outbound proxy, firewall, private-runner, and artifact-egress rules now. Prefer automating allowlists from GitHub’s Meta API or permitting the documented wildcard when policy allows; otherwise add both ranges and test log and job-summary access from every runner network.",
+          "status": "Act now",
+          "topics": [
+            "DX",
+            "Platform",
+            "Networking",
+            "Reliability"
+          ],
+          "published": "2026-10-22",
+          "sourceUrl": "https://github.blog/changelog/2026-10-22-meta-api-endpoints-updated-for-actions-blob-storage/"
+        },
+        {
+          "title": "OpenTofu 1.13.2 fixes a dependency-installation security issue",
+          "summary": "OpenTofu 1.13.2 addresses excessive CPU consumption when tofu init connects to an attacker-controlled HTTP/2 dependency server. It also restores workspace autocompletion, fixes -chdir with -version, and stores experimental symbol libraries in plan files so those plans can be applied.",
+          "impact": "Move shared CI images and developer toolchains on the 1.13 line to 1.13.2 after a normal plan-and-apply smoke test. Treat third-party module and provider endpoints as an input-security boundary, verify checksums and mirrors, and avoid leaving upgrade pipelines on 1.13.0 or 1.13.1.",
+          "status": "Act now",
+          "topics": [
+            "IaC",
+            "Security",
+            "DX"
+          ],
+          "published": "2026-10-21",
+          "sourceUrl": "https://github.com/opentofu/opentofu/releases/tag/v1.13.2"
+        },
+        {
+          "title": "Amazon ECS Gateway turns ingress into a platform-level resource",
+          "summary": "ECS Gateway is a managed account-level ingress abstraction for ECS. Platform teams define subnets, security groups, TLS, listeners, and WAF once; application teams attach services through a connector. ECS then manages certificates, DNS, target groups, security groups, and shared ALBs, with up to 25 services per ALB.",
+          "impact": "Prototype it as an ECS golden path and compare it with existing ALB modules and service-connect patterns. Validate immutable gateway settings, IAM infrastructure-role scope, AZ alignment, quota and failure behavior, shared-ALB blast radius, observability, and the underlying ALB, logging, certificate, and transfer charges.",
+          "status": "Evaluate",
+          "topics": [
+            "AWS",
+            "Platform",
+            "Networking",
+            "DX",
+            "FinOps"
+          ],
+          "published": "2026-10-20",
+          "sourceUrl": "https://aws.amazon.com/blogs/aws/introducing-amazon-ecs-gateway-a-fully-managed-ingress-solution-for-ecs-services/"
+        },
+        {
+          "title": "AWS Continuum combines code findings with runtime attack paths",
+          "summary": "AWS Continuum for code vulnerabilities is generally available in us-east-1 and us-west-2. It connects GitHub or S3 code with optional AWS Config and network context, validates exploitability, ranks findings by business impact, and proposes reviewed patches or pull requests rather than relying on generic severity alone.",
+          "impact": "Evaluate on a bounded codebase against existing SAST and GitHub security workflows, with human merge gates and explicit data-access review. Measure false positives, proof quality, remediation regressions, and cost: pricing combines a monthly protected-lines-of-code fee with usage-based Continuum inference units.",
+          "status": "Evaluate",
+          "topics": [
+            "AWS",
+            "Security",
+            "AI",
+            "Platform",
+            "FinOps"
+          ],
+          "published": "2026-10-22",
+          "sourceUrl": "https://aws.amazon.com/blogs/aws/aws-continuum-for-code-vulnerabilities-is-now-generally-available/"
+        },
+        {
+          "title": "Enterprise GitHub Apps can replace more classic PAT automation",
+          "summary": "Enterprise-level GitHub App installations are generally available with expanded APIs for repository policies, rulesets, bypass requests, two-factor requirements, verified domains, IP allowlists, access restrictions, member privileges, and repository settings. The coverage makes short-lived, permission-scoped app tokens viable for more governance automation.",
+          "impact": "Inventory classic PATs and owner-account tokens used by platform and compliance automation, then migrate the highest-risk flows to narrowly scoped enterprise GitHub Apps. Separate read and write duties, document installation ownership, test token rotation and failure handling, and retain auditability before removing legacy credentials.",
+          "status": "Evaluate",
+          "topics": [
+            "Platform",
+            "Security",
+            "DX"
+          ],
+          "published": "2026-10-23",
+          "sourceUrl": "https://github.blog/changelog/2026-10-23-enterprise-installations-for-github-apps-generally-available/"
+        },
+        {
+          "title": "GCP can enforce Model Armor filters through organization policy",
+          "summary": "Model Armor now supports generally available custom organization policies for Template resources. Administrators can require filters for prompt injection and jailbreak attempts, responsible-AI categories, Sensitive Data Protection, or de-identification whenever teams create or update templates at organization, folder, or project scope.",
+          "impact": "Define a minimum AI gateway baseline as code and test it in dry-run with Policy Simulator before enforcement. Standardize mandatory filters, permitted exceptions, ownership, and regional templates so application teams cannot deploy weaker safeguards while still allowing workload-specific tuning above the baseline.",
+          "status": "Evaluate",
+          "topics": [
+            "GCP",
+            "AI",
+            "Security",
+            "Platform"
+          ],
+          "published": "2026-10-21",
+          "sourceUrl": "https://docs.cloud.google.com/model-armor/release-notes#October_21_2026"
+        }
+      ]
+    },
+    {
       "issue": 6,
       "slug": "2026-10-19-weekly-briefing",
       "date": "2026-10-19",
