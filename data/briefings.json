@@ -2,6 +2,108 @@
   "schemaVersion": 1,
   "editions": [
     {
+      "issue": 8,
+      "slug": "2026-11-02-weekly-briefing",
+      "date": "2026-11-02",
+      "readTime": 8,
+      "summary": "Security boundaries and enforceable platform controls dominate this week. Upgrade AWS Private CA Connector for Kubernetes and Strands Agents Tools immediately; then assess GitHub Actions lockfiles, Terraform’s policy fix, GitHub’s agentic workflow runtime, Azure posture-policy governance, and GCP Workbench organization constraints. AWS networking, upstream Kubernetes, OpenTofu, Pulumi, and Crossplane produced no additional change that cleared the editorial threshold.",
+      "items": [
+        {
+          "title": "AWS Private CA Connector for Kubernetes fixes issuer authorization bypass",
+          "summary": "CVE-2026-119115 affects aws-privateca-issuer before 1.10.1 and the EKS add-on before 1.10.1-eksbuild.1. Under certain conditions, an authenticated user authorized only for a namespace-scoped issuer could obtain certificates—including subordinate CA certificates—signed by a cluster-scoped issuer they were not authorized to use.",
+          "impact": "Upgrade the controller or EKS add-on immediately. Review cert-manager approval policies and issuer RBAC, then investigate certificates issued through affected clusters for unexpected cluster-issuer or subordinate-CA use; revoke and rotate anything suspicious.",
+          "status": "Act now",
+          "topics": [
+            "AWS",
+            "Kubernetes",
+            "Security"
+          ],
+          "published": "2026-10-29",
+          "sourceUrl": "https://aws.amazon.com/security/security-bulletins/2026-156-aws/"
+        },
+        {
+          "title": "Strands Agents Tools could expose host credentials through prompt injection",
+          "summary": "CVE-2026-115415 allowed model-supplied tool arguments to disable secret masking in the Strands environment tool. Crafted content processed by an agent could therefore return cleartext environment variables—including cloud credentials and API keys—without operator consent. Versions 0.1.0 through 0.8.5 are affected; 0.8.6 fixes the issue and deprecates the tool.",
+          "impact": "Upgrade to 0.8.6 or later, remove the environment tool where upgrading is delayed, and rotate credentials present in affected agent environments. Prefer short-lived workload identity, constrained egress, and explicit human-controlled access to secrets for every agent runtime.",
+          "status": "Act now",
+          "topics": [
+            "AWS",
+            "AI",
+            "Security"
+          ],
+          "published": "2026-10-28",
+          "sourceUrl": "https://aws.amazon.com/security/security-bulletins/2026-154-aws/"
+        },
+        {
+          "title": "Terraform 1.17.1 restores policy evaluation for destroy plans",
+          "summary": "Terraform 1.17.1 fixes a governance gap in the new Terraform Policy feature: module policies are now always evaluated during destroy plans. It also reports every policy result for replaced resources in Stacks instead of only one, improving the completeness of policy decisions around destructive and replacement operations.",
+          "impact": "If Terraform 1.17 policies are part of your guardrails, update CI and operator toolchains to 1.17.1 and rerun representative destroy and replacement plans before relying on enforcement. Treat prior 1.17.0 policy results for those operations as potentially incomplete.",
+          "status": "Act now",
+          "topics": [
+            "IaC",
+            "Security",
+            "Reliability"
+          ],
+          "published": "2026-10-28",
+          "sourceUrl": "https://github.com/hashicorp/terraform/releases/tag/v1.17.1"
+        },
+        {
+          "title": "GitHub Actions workflow lockfiles reach general availability",
+          "summary": "Actions lockfiles can now pin direct and transitive action dependencies to exact commits while workflows retain readable tag or branch references. Administrators can require lockfiles, CI can detect stale files, and Dependabot regenerates matching entries during action updates. The feature is GA across Enterprise Cloud—including data residency—Team, and Free.",
+          "impact": "Pilot the gh actions-lock extension on shared workflows, add stale-file checks, and consider an organization policy once update ownership is clear. Locking reduces mutable-reference risk but does not attest that an action is trustworthy, so retain source review and allowlisting.",
+          "status": "Evaluate",
+          "topics": [
+            "Platform",
+            "DX",
+            "Security"
+          ],
+          "published": "2026-10-28",
+          "sourceUrl": "https://github.blog/changelog/2026-10-28-github-actions-workflow-lockfiles-are-generally-available/"
+        },
+        {
+          "title": "GitHub Agentic Workflows becomes generally available",
+          "summary": "GitHub’s open-source Agentic Workflows compiles natural-language Markdown automation into standard Actions workflows for tasks such as triage, CI failure analysis, documentation, and tests. It reuses runner groups and policy constraints, defaults to read-only access, and adds sandboxing, firewalling, output validation, threat detection, ARC support, and cost forecasting.",
+          "impact": "Evaluate it as a governed platform capability rather than ad hoc repository automation. Start with read-only workflows; validate permissions, prompt-injection boundaries, network egress, safe-output controls, self-hosted runner isolation, model-provider data handling, and AI-credit budgets before allowing code changes.",
+          "status": "Evaluate",
+          "topics": [
+            "Platform",
+            "DX",
+            "AI",
+            "Security"
+          ],
+          "published": "2026-10-28",
+          "sourceUrl": "https://github.blog/changelog/2026-10-28-github-agentic-workflows-generally-available/"
+        },
+        {
+          "title": "Azure previews centralized posture policies and exemption lifecycle management",
+          "summary": "Defender for Cloud now previews posture-policy authoring and centralized recommendation exemptions in the Microsoft Defender portal for Azure environments. Teams can evaluate resources against the Defender baseline, customize audit-based posture policies, and track accepted-risk exemptions. Existing Azure policies remain effective but are not automatically migrated; deny effects still require Azure Policy.",
+          "impact": "Map the preview against your current Azure Policy and exemption workflow before migrating governance. Test ownership, expiry, audit evidence, and reporting in a non-production management group, and avoid treating Defender posture policies as preventive controls while evaluation remains audit-only.",
+          "status": "Evaluate",
+          "topics": [
+            "Azure",
+            "Security",
+            "Platform"
+          ],
+          "published": "2026-10-28",
+          "sourceUrl": "https://learn.microsoft.com/en-us/azure/defender-for-cloud/release-notes#posture-policies-and-recommendation-exemptions-available-in-microsoft-defender"
+        },
+        {
+          "title": "GCP makes Workbench configuration guardrails generally available",
+          "summary": "Agent Platform Workbench now supports generally available custom organization policies for notebooks.googleapis.com/Instance. Custom constraints can allow or deny instance creation and updates based on configuration, with dry-run mode for measuring impact before enforcement. This moves key AI-workbench controls from convention into the resource hierarchy’s policy layer.",
+          "impact": "Define a baseline for Workbench networking, identity, data location, and approved configurations using supported resource fields. Roll constraints out in dry-run mode, analyze violations and exception ownership, then enforce them at the highest appropriate folder or organization scope.",
+          "status": "Evaluate",
+          "topics": [
+            "GCP",
+            "AI",
+            "Security",
+            "Platform"
+          ],
+          "published": "2026-10-26",
+          "sourceUrl": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/notebooks/workbench/release-notes#october_26_2026"
+        }
+      ]
+    },
+    {
       "issue": 7,
       "slug": "2026-10-26-weekly-briefing",
       "date": "2026-10-26",
