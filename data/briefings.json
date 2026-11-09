@@ -2,6 +2,122 @@
   "schemaVersion": 1,
   "editions": [
     {
+      "issue": 9,
+      "slug": "2026-11-09-weekly-briefing",
+      "date": "2026-11-09",
+      "readTime": 9,
+      "summary": "Patch urgency dominates this week: EKS NetworkPolicy enforcement, GKE nodes, Aurora Babelfish, and selected public GitHub Actions workflows all need owner attention. Beyond remediation, AWS introduced continuous device-posture checks and private CIDR tunneling, while GCP added governed security scanning for agent skills; OpenTofu fixed a local-state integrity failure. Azure, upstream Kubernetes, Terraform, Pulumi, and Crossplane produced no additional change above the threshold.",
+      "items": [
+        {
+          "title": "EKS Network Policy Agent fixes an ingress enforcement bypass",
+          "summary": "CVE-2026-122266 affects aws-network-policy-agent before 1.3.7 and the Amazon VPC CNI managed add-on before 1.22.3. Improper isolation of shared eBPF connection-tracking state could let an authenticated adjacent user bypass NetworkPolicy ingress enforcement between co-located Pods. AWS provides no workaround.",
+          "impact": "Inventory clusters with VPC CNI NetworkPolicy enabled and upgrade the managed add-on to 1.22.3 or later immediately. Prioritize multi-tenant clusters, verify rollout health on every node, and review sensitive workloads that relied on NetworkPolicy as their primary isolation boundary.",
+          "status": "Act now",
+          "topics": [
+            "AWS",
+            "Kubernetes",
+            "Security",
+            "Networking"
+          ],
+          "published": "2026-11-04",
+          "sourceUrl": "https://aws.amazon.com/security/security-bulletins/2026-170-aws/"
+        },
+        {
+          "title": "GKE patches a Linux TCP flaw enabling container escape or kernel panic",
+          "summary": "GCP-2026-078 covers CVE-2026-98432 in the Linux IPv4 TCP stack. An unprivileged container can trigger root code execution on the node without special capabilities; reachable TCP listeners can also be attacked remotely using IPv4 options. Standard and Autopilot clusters are affected, while GKE 1.37 and Ubuntu patches were still pending at publication.",
+          "impact": "Upgrade COS control planes and nodes to Google’s listed patched builds or later, using a newer release channel’s patch where supported. Until 1.37 and Ubuntu fixes arrive, restrict node, Pod, and control-plane listeners to trusted sources and reduce multi-tenant exposure.",
+          "status": "Act now",
+          "topics": [
+            "GCP",
+            "Kubernetes",
+            "Security",
+            "Reliability"
+          ],
+          "published": "2026-11-04",
+          "sourceUrl": "https://docs.cloud.google.com/kubernetes-engine/security-bulletins#gcp-2026-078"
+        },
+        {
+          "title": "Aurora Babelfish privilege escalation requires a patched engine",
+          "summary": "CVE-2026-119922 allows remote authenticated users to elevate privileges in affected Babelfish for PostgreSQL extensions and numerous Aurora PostgreSQL engine builds. AWS rates the issue Important, with CVSS 8.8, and lists no workaround. Patched open-source releases are 4.10, 5.6, and 6.1; Aurora remediation requires a listed fixed engine version.",
+          "impact": "Find every Aurora cluster with Babelfish enabled, compare its engine and embedded Babelfish versions with the bulletin, schedule the supported upgrade, and apply pending maintenance. Review database principals and audit logs for unexpected privilege use; network isolation alone does not remove the authenticated attack path.",
+          "status": "Act now",
+          "topics": [
+            "AWS",
+            "Security",
+            "Reliability"
+          ],
+          "published": "2026-11-03",
+          "sourceUrl": "https://aws.amazon.com/security/security-bulletins/2026-165-aws/"
+        },
+        {
+          "title": "GitHub will block pull_request_target by default in public repositories",
+          "summary": "On December 2, GitHub Actions will block pull_request_target events in public repositories unless an applicable workflow-execution policy explicitly permits them. The trigger runs in the base repository context and can expose secrets when workflows execute untrusted fork code. Brownouts are scheduled for November 9 and November 16 from 16:00–18:00 UTC.",
+          "impact": "Use Actions Insights before today’s first brownout to find affected workflows. Remove unsafe checkout or execution of fork-controlled content; where the trigger is genuinely required, create the narrowest workflow-file policy exception and treat today’s failed runs as migration evidence rather than bypassing the control broadly.",
+          "status": "Act now",
+          "topics": [
+            "Platform",
+            "DX",
+            "Security"
+          ],
+          "published": "2026-11-02",
+          "sourceUrl": "https://github.blog/changelog/2026-11-02-pull_request_target-blocked-by-default-december-2/"
+        },
+        {
+          "title": "OpenTofu patches local-state loss after a crashed first apply",
+          "summary": "OpenTofu 1.13.9 and the 1.12.12 backport fix a local-backend persistence bug when the first apply crashes. Because the failure affects the moment a new deployment first establishes state, interrupted bootstrap runs could leave operators without the expected durable record of resources that were already created.",
+          "impact": "Update local-backend CI images and operator installations on the 1.12 and 1.13 lines. Inspect recently crashed first applies against real infrastructure and state backups before retrying, and prefer a locked, versioned remote backend for shared or production environments.",
+          "status": "Act now",
+          "topics": [
+            "IaC",
+            "Reliability"
+          ],
+          "published": "2026-11-05",
+          "sourceUrl": "https://github.com/opentofu/opentofu/releases/tag/v1.13.9"
+        },
+        {
+          "title": "AWS Client VPN adds continuous device-posture authorization",
+          "summary": "Client VPN can now combine user identity with signed device-health signals from CrowdStrike, Jamf, or JumpCloud in a Cedar policy. AWS evaluates the policy at connection time and roughly every five minutes, terminating sessions that fall out of compliance. Shadow mode, CloudWatch metrics, and connection logs support staged rollout; the feature adds no AWS charge.",
+          "impact": "Evaluate it as a replacement for custom connect-time Lambda checks. Require AWS VPN Client 6.2 or later, distribute updated profiles, model missing or stale tokens explicitly, test policies in shadow mode, and account for the operational dependency on the external device-trust provider.",
+          "status": "Evaluate",
+          "topics": [
+            "AWS",
+            "Security",
+            "Networking"
+          ],
+          "published": "2026-11-05",
+          "sourceUrl": "https://aws.amazon.com/blogs/networking-and-content-delivery/introducing-device-posture-assessment-for-aws-client-vpn/"
+        },
+        {
+          "title": "PrivateLink tunnel endpoints expose whole network segments across VPCs",
+          "summary": "AWS introduced GENEVE-based tunnel VPC endpoints that let a consumer application privately reach an entire shared CIDR range through PrivateLink and VPC Lattice resource gateways. New resources inside the segment become reachable without individual registration. Billing combines endpoint hours, endpoint data processing, and resource-gateway data processing.",
+          "impact": "Prototype only where ephemeral or non-HTTP resources make per-service publication impractical. Validate overlapping CIDRs, routing and MTU behavior, security-group boundaries, cross-account ownership, observability, and the larger blast radius of sharing a network segment rather than an explicit service.",
+          "status": "Evaluate",
+          "topics": [
+            "AWS",
+            "Networking",
+            "Security",
+            "FinOps"
+          ],
+          "published": "2026-11-05",
+          "sourceUrl": "https://aws.amazon.com/blogs/networking-and-content-delivery/introducing-tunnel-endpoints-for-private-access-to-network-segments/"
+        },
+        {
+          "title": "GCP Agent Registry adds governed security scanning for agent skills",
+          "summary": "Agent Registry now scans immutable standalone skill revisions for security issues, exposes Finding resources, and supports organization-wide scanning policies through custom Organization Policy constraints. Standalone skills, versioning, search, verified publisher metadata, and least-privilege management are generally available; customer-managed encryption for skill payloads remains in preview.",
+          "impact": "Treat skills as a software-supply-chain artifact: establish trusted publishers, immutable promotion stages, mandatory scanning, finding ownership, and least-privilege roles before broad agent adoption. Evaluate CMEK separately where residency or key-control requirements justify using a preview capability.",
+          "status": "Evaluate",
+          "topics": [
+            "GCP",
+            "AI",
+            "Platform",
+            "Security"
+          ],
+          "published": "2026-11-06",
+          "sourceUrl": "https://docs.cloud.google.com/release-notes#November_06_2026"
+        }
+      ]
+    },
+    {
       "issue": 8,
       "slug": "2026-11-02-weekly-briefing",
       "date": "2026-11-02",
